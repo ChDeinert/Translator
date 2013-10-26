@@ -1,0 +1,240 @@
+# Automatic generated POT-File.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-10-26 01:48:44+0200\n"
+"PO-Revision-Date: 2013-10-26 01:48:44+0200\n"
+"Last-Translator: \n"
+"Language-Team:  \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+
+#: modules/Translator/lib/Translator/Api/Admin.php:57
+#: modules/Translator/templates/admin/edit.tpl:16
+#: modules/Translator/templates/admin/view.tpl:13
+msgid "Avaiable Translations"
+msgstr "Verfügbare Übersetzungen"
+
+#: modules/Translator/lib/Translator/Api/Admin.php:63
+msgid "Configure translation languages"
+msgstr "Übersetzungssprachen Konfigurieren"
+
+#: modules/Translator/lib/Translator/Api/Admin.php:103
+msgid "Add New Translation Strings"
+msgstr "Neue Übersetzungsstrings hinzufügen"
+
+#: modules/Translator/lib/Translator/Api/Admin.php:108
+msgid "Import Translation from Module"
+msgstr "Aus Modul importieren"
+
+#: modules/Translator/lib/Translator/Version.php:23
+msgid "Translator"
+msgstr "Translator"
+
+#: modules/Translator/templates/admin/addNewTranslations.tpl:16
+msgid "New Translationstrings"
+msgstr "Neue Übersetzungsstrings"
+
+#: modules/Translator/templates/admin/addNewTranslations.tpl:22
+#: modules/Translator/templates/admin/edit.tpl:81
+#: modules/Translator/templates/admin/view.tpl:69
+msgid "Sourcestring"
+msgstr "Quell-String"
+
+#: modules/Translator/templates/admin/addNewTranslations.tpl:31
+#: modules/Translator/templates/admin/configLanguages.tpl:39
+#: modules/Translator/templates/admin/configModules.tpl:39
+#: modules/Translator/templates/admin/edit.tpl:103
+#: modules/Translator/templates/admin/view.tpl:93
+msgid "No items found."
+msgstr "Nichts gefunden"
+
+#: modules/Translator/templates/admin/addNewTranslations.tpl:37
+msgid "OK"
+msgstr "OK"
+
+#: modules/Translator/templates/admin/configModules.tpl:16
+msgid "Configure Modules to translate"
+msgstr "Module zum Übersetzen konfigurieren"
+
+#: modules/Translator/templates/admin/configModules.tpl:24
+#: modules/Translator/templates/admin/edit.tpl:78
+#: modules/Translator/templates/admin/view.tpl:66
+msgid "ID"
+msgstr "ID"
+
+#: modules/Translator/templates/admin/configModules.tpl:25
+msgid "Modulename"
+msgstr "Modulname"
+
+#: modules/Translator/templates/admin/configModules.tpl:26
+msgid "Active for Translation"
+msgstr "Für Übersetzung aktiviert"
+
+#: modules/Translator/templates/admin/configLanguages.tpl:45
+#: modules/Translator/templates/admin/configModules.tpl:45
+#: modules/Translator/templates/admin/edit.tpl:109
+msgid "Save"
+msgstr "Speichern"
+
+#: modules/Translator/templates/admin/configLanguages.tpl:46
+#: modules/Translator/templates/admin/configModules.tpl:46
+#: modules/Translator/templates/admin/edit.tpl:110
+msgid "Cancel"
+msgstr "Abbruch"
+
+#: modules/Translator/templates/admin/configLanguages.tpl:16
+msgid "Configuration of languages to translate"
+msgstr "Konfiguration der Sprachen zum Übersetzen"
+
+#: modules/Translator/templates/admin/configLanguages.tpl:25
+msgid "Langcode"
+msgstr "Sprachcode"
+
+#: modules/Translator/templates/admin/configLanguages.tpl:26
+msgid "Language"
+msgstr "Sprache"
+
+#: modules/Translator/templates/admin/edit.tpl:40
+#: modules/Translator/templates/admin/view.tpl:37
+msgid "Items per page"
+msgstr "Anzahl pro Seite"
+
+#: modules/Translator/templates/admin/view.tpl:71
+msgid "Languages"
+msgstr "Sprachen"
+
+#: modules/Translator/templates/admin/view.tpl:88
+msgid "No Language configured."
+msgstr "keine Sprache Konfiguriert"
+
+#: modules/Translator/lib/Translator/Api/Admin.php:88
+msgid "View Available Translations"
+msgstr "Verfügbare Übersetzungen anzeigen"
+
+#: modules/Translator/lib/Translator/Api/Admin.php:93
+msgid "Edit Available Translations"
+msgstr "Verfügbare Übersetzungen bearbeiten"
+
+#: modules/Translator/lib/Translator/Api/Translation.php:235
+msgid "Could not update Translation '%s'"
+msgstr "Übersetzung '%s' konnte nicht aktualisiert werden"
+
+#: modules/Translator/lib/Translator/Api/Translation.php:247
+msgid "Could not insert Translation '%s'"
+msgstr "Übersetzung '%s' konnte nicht hinzugefügt werden"
+
+#: modules/Translator/lib/Translator/Controller/Admin.php:576
+#: modules/Translator/lib/Translator/Controller/Admin.php:647
+msgid "Configuration successfully updated"
+msgstr "Konfiguration erfolgreich aktualisiert"
+
+#: modules/Translator/templates/admin/edit.tpl:52
+#: modules/Translator/templates/admin/view.tpl:49
+msgid "Moduletranslations"
+msgstr "Modulübersetzungen"
+
+#: modules/Translator/templates/admin/edit.tpl:84
+msgid "Targetstring"
+msgstr "Ziel-String"
+
+#: modules/Translator/lib/Translator/Api/Admin.php:98
+#: modules/Translator/templates/admin/exportTranslations.tpl:16
+msgid "Export Translations"
+msgstr "Übersetzungen Exportieren"
+
+#: modules/Translator/lib/Translator/Api/Export.php:91
+msgid "Created .pot-File for module %s"
+msgstr ".pot-Datei für Modul %s erstellt"
+
+#: modules/Translator/lib/Translator/Api/Export.php:93
+msgid "Error while creating .pot-File for module %s"
+msgstr "Fehler beim erstellen der .pot-Datei für das Modul %s"
+
+#: modules/Translator/lib/Translator/Api/Export.php:195
+msgid "Created .po-File for module %s"
+msgstr ".po-Datei für Modul %s erstellt"
+
+#: modules/Translator/lib/Translator/Api/Export.php:201
+msgid "Error while creating .po-File for module %s"
+msgstr "Fehler beim erstellen der .po-Datei für das Modul %s"
+
+#: modules/Translator/lib/Translator/Api/Export.php:222
+msgid "Compiled .po- to .mo-File for module %s"
+msgstr ".po-Datei des Moduls %s zu .mo-Datei kompiliert"
+
+#: modules/Translator/lib/Translator/Api/Export.php:224
+msgid "Error while compiling .po- to .mo-File for module %s"
+msgstr "Fehler beim kompilieren der .po-Datei des Moduls %s in eine .mo-Datei"
+
+#: modules/Translator/templates/admin/exportTranslations.tpl:38
+#: modules/Translator/templates/admin/importTranslations.tpl:38
+msgid "Module"
+msgstr "Modul"
+
+#: modules/Translator/templates/admin/exportTranslations.tpl:39
+msgid "All languages"
+msgstr "Alle Sprachen"
+
+#: modules/Translator/templates/admin/exportTranslations.tpl:52
+msgid "Export to .pot-File"
+msgstr "Export in eine .pot-Datei"
+
+#: modules/Translator/templates/admin/exportTranslations.tpl:63
+#: modules/Translator/templates/admin/exportTranslations.tpl:56
+msgid "Export to .po-File"
+msgstr "Export in eine .po-Datei"
+
+#: modules/Translator/lib/Translator/Api/Admin.php:68
+msgid "Configure translation modules"
+msgstr "Zu Übersetzende Module konfigurieren"
+
+#: modules/Translator/lib/Translator/Controller/Admin.php:236
+msgid "Translations saved"
+msgstr "Übersetzungen gespeichert"
+
+#: modules/Translator/lib/Translator/Api/Import.php:82
+#: modules/Translator/lib/Translator/Api/Import.php:173
+msgid "Could not fild pot-File"
+msgstr "pot-Datei konnte nicht gefunden werden"
+
+#: modules/Translator/lib/Translator/Controller/Admin.php:494
+msgid "Sourcestrings from .pot-File imported"
+msgstr "Quell-Strings aus der .pot-Datei importiert"
+
+#: modules/Translator/lib/Translator/Controller/Admin.php:506
+msgid "Translation from .po-File imported"
+msgstr "Übersetzungen aus der .po-Datei importiert"
+
+#: modules/Translator/templates/admin/importTranslations.tpl:16
+msgid "Import Translations"
+msgstr "Übersetzungen importieren"
+
+#: modules/Translator/templates/admin/importTranslations.tpl:39
+msgid "Files"
+msgstr "Dateien"
+
+#: modules/Translator/templates/admin/importTranslations.tpl:49
+msgid "Import from %s-file"
+msgstr "Aus %s-Datei importieren"
+
+#: modules/Translator/templates/admin/importTranslations.tpl:51
+msgid "Language: "
+msgstr "Sprache:"
+
+#: modules/Translator/templates/admin/edit.tpl:48
+#: modules/Translator/templates/admin/view.tpl:45
+msgid "All"
+msgstr "Alle"
+
+#: modules/Translator/lib/Translator/Version.php:24
+msgid "Gettext Translation-generation"
+msgstr "Gettext Übersetzungs Erstellung"
+
