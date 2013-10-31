@@ -23,6 +23,7 @@ A *[Zikula Application Framework](http://www.zikula.org)* Module Providing a Web
 ### via Github
 1. Go into the module path of your _Zikula_ installation
 2. Run following command to get the module
+
 		git clone https://github.com/christiandeinert/Translator.git Translator
 3. Initialize the **LDAPAuth** module in the _Zikula_ Adminstration area
 
