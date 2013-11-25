@@ -34,7 +34,7 @@
     <form class="z-form" id="configForm" method="get" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="module" value="Translator"/>
         <input type="hidden" name="type" value="admin"/>
-        <input type="hidden" name="func" value="view"/>
+        <input type="hidden" name="func" value=„edit“/>
         <input type="hidden" name="sort" value="{$sort}"/>
         <input type="hidden" name="sortdir" value="{$sortdir}"/>
         
