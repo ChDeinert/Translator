@@ -14,12 +14,23 @@
  */
 abstract class Translator_AbstractController extends Zikula_AbstractController
 {
+    /**
+     * Post initialise: called from constructor
+     *
+     * @see Zikula_AbstractBase::postInitialize()
+     */
     protected function postInitialize()
     {
         $this->view->setCaching(false);
         parent::postInitialize();
     }
     
+    /**
+     * Assigns Key-Value pairs to the View
+     *
+     * @param array $argArray Referencial array of Arguments
+     * @throws Zikula_Exception_Fatal Thrown if no array is given
+     */
     protected function assign2View(array &$argArray)
     {
         if (!is_array($argArray)) {
