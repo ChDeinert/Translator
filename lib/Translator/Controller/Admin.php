@@ -339,7 +339,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
     }
     
     /**
-     * Triggers the search an import of new Strings to translate.
+     * Triggers the search and import of new Strings to translate.
      *
      * Parameters passed to the Template
      * ---------------------------------
