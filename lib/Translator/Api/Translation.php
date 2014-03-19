@@ -257,30 +257,32 @@ class Translator_Api_Translation extends Zikula_AbstractApi
      * @uses Translator_Api_Translation::addNewStrings2DB()
      * @return array The newly added msgids
      */
-    public function addStrings2Translate()
+    public function addStrings2Translate($args)
     {
+        if (!isset($args['mod']) || empty($args['mod'])) {
+            throw new Zikula_Exception_Fatal();
+        }
+        
         $modules2process = $this->getVar('translatorModules');
         
-        if (!is_array($modules2process)) {
-            $modules2process = array();
+        if (!is_array($modules2process) && !in_array($args['mod'], $modules2process)) {
+            throw new Zikula_Exception_Fatal();
         }
         
-        foreach ($modules2process as $currentModule) {
-            $currentModule_info = ModUtil::apiFunc('Extensions', 'admin', 'modify', array('id' => $currentModule));
-            $modulepath = 'modules/'.$currentModule_info['directory'];
-            DBUtil::executeSQL("update translator_modtrans set in_use = 0 where mod_id = $currentModule ");
-            $modtransObj = DBUtil::selectExpandedObjectArray('translator_modtrans', array(), 'mod_id='.$currentModule);
-            
-            if (!empty($modtransObj)) {
-                foreach ($modtransObj as $modtrans) {
-                    DBUtil::deleteWhere('translator_translations_occurrences', 'transmod_id='.$modtrans['transmod_id']);
-                }
+        $currentModule_info = ModUtil::apiFunc('Extensions', 'admin', 'modify', array('id' => $args['mod']));
+        $modulepath = 'modules/'.$currentModule_info['directory'];
+        DBUtil::executeSQL("update translator_modtrans set in_use = 0 where mod_id = ".$args['mod']." ");
+        $modtransObj = DBUtil::selectExpandedObjectArray('translator_modtrans', array(), 'mod_id='.$args['mod']);
+        
+        if (!empty($modtransObj)) {
+            foreach ($modtransObj as $modtrans) {
+                DBUtil::deleteWhere('translator_translations_occurrences', 'transmod_id='.$modtrans['transmod_id']);
             }
-            
-            $this->processDirectory($currentModule, $modulepath);
-            DBUtil::deleteWhere('translator_modtrans', 'mod_id='.$currentModule.' and in_use=0');
         }
-
+        
+        $this->processDirectory($args['mod'], $modulepath);
+        DBUtil::deleteWhere('translator_modtrans', 'mod_id='.$args['mod'].' and in_use=0');
+        
         // Check if the Strings are allready in the database
         foreach ($this->translatorStrings as $key => $val) {
             $existing = $this->checkIfTranslationExists($key, $val);
@@ -291,8 +293,13 @@ class Translator_Api_Translation extends Zikula_AbstractApi
         }
         
         $this->addNewStrings2DB();
+        $items = array();
         
-        return $this->translatorStrings;
+        foreach ($this->translatorStrings as $key => $val) {
+            $items[] = $key;
+        }
+        
+        return $items;
     }
     
     /**
