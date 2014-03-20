@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-26 01:48:44+0200\n"
-"PO-Revision-Date: 2013-10-26 01:48:44+0200\n"
+"POT-Creation-Date: 2014-03-19 13:55:22+0100\n"
+"PO-Revision-Date: 2014-03-19 13:55:22+0100\n"
 "Last-Translator: \n"
 "Language-Team:  \n"
 "MIME-Version: 1.0\n"
@@ -38,25 +38,23 @@ msgstr "Import Translation from Module"
 msgid "Translator"
 msgstr "Translator"
 
-#: modules/Translator/templates/admin/addNewTranslations.tpl:16
+#: modules/Translator/templates/admin/addNewTranslations.tpl:21
 msgid "New Translationstrings"
 msgstr "New Translationstrings"
 
-#: modules/Translator/templates/admin/addNewTranslations.tpl:22
-#: modules/Translator/templates/admin/edit.tpl:81
-#: modules/Translator/templates/admin/view.tpl:69
+#: modules/Translator/templates/admin/edit.tpl:84
+#: modules/Translator/templates/admin/view.tpl:72
 msgid "Sourcestring"
 msgstr "Sourcestring"
 
-#: modules/Translator/templates/admin/addNewTranslations.tpl:31
 #: modules/Translator/templates/admin/configLanguages.tpl:39
 #: modules/Translator/templates/admin/configModules.tpl:39
-#: modules/Translator/templates/admin/edit.tpl:103
-#: modules/Translator/templates/admin/view.tpl:93
+#: modules/Translator/templates/admin/edit.tpl:106
+#: modules/Translator/templates/admin/view.tpl:96
 msgid "No items found."
 msgstr "No items found."
 
-#: modules/Translator/templates/admin/addNewTranslations.tpl:37
+#: modules/Translator/templates/admin/addNewTranslations.tpl:46
 msgid "OK"
 msgstr "OK"
 
@@ -65,8 +63,8 @@ msgid "Configure Modules to translate"
 msgstr "Configure Modules to translate"
 
 #: modules/Translator/templates/admin/configModules.tpl:24
-#: modules/Translator/templates/admin/edit.tpl:78
-#: modules/Translator/templates/admin/view.tpl:66
+#: modules/Translator/templates/admin/edit.tpl:81
+#: modules/Translator/templates/admin/view.tpl:69
 msgid "ID"
 msgstr "ID"
 
@@ -80,13 +78,13 @@ msgstr "Active for Translation"
 
 #: modules/Translator/templates/admin/configLanguages.tpl:45
 #: modules/Translator/templates/admin/configModules.tpl:45
-#: modules/Translator/templates/admin/edit.tpl:109
+#: modules/Translator/templates/admin/edit.tpl:112
 msgid "Save"
 msgstr "Save"
 
 #: modules/Translator/templates/admin/configLanguages.tpl:46
 #: modules/Translator/templates/admin/configModules.tpl:46
-#: modules/Translator/templates/admin/edit.tpl:110
+#: modules/Translator/templates/admin/edit.tpl:113
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -102,16 +100,16 @@ msgstr "Langcode"
 msgid "Language"
 msgstr "Language"
 
-#: modules/Translator/templates/admin/edit.tpl:40
-#: modules/Translator/templates/admin/view.tpl:37
+#: modules/Translator/templates/admin/edit.tpl:43
+#: modules/Translator/templates/admin/view.tpl:40
 msgid "Items per page"
 msgstr "Items per page"
 
-#: modules/Translator/templates/admin/view.tpl:71
+#: modules/Translator/templates/admin/view.tpl:74
 msgid "Languages"
 msgstr "Languages"
 
-#: modules/Translator/templates/admin/view.tpl:88
+#: modules/Translator/templates/admin/view.tpl:91
 msgid "No Language configured."
 msgstr "No Language configured."
 
@@ -131,17 +129,17 @@ msgstr "Could not update Translation '%s'"
 msgid "Could not insert Translation '%s'"
 msgstr "Could not insert Translation '%s'"
 
-#: modules/Translator/lib/Translator/Controller/Admin.php:576
-#: modules/Translator/lib/Translator/Controller/Admin.php:647
+#: modules/Translator/lib/Translator/Controller/Admin.php:543
+#: modules/Translator/lib/Translator/Controller/Admin.php:614
 msgid "Configuration successfully updated"
 msgstr "Configuration successfully updated"
 
-#: modules/Translator/templates/admin/edit.tpl:52
-#: modules/Translator/templates/admin/view.tpl:49
+#: modules/Translator/templates/admin/edit.tpl:55
+#: modules/Translator/templates/admin/view.tpl:52
 msgid "Moduletranslations"
 msgstr "Moduletranslations"
 
-#: modules/Translator/templates/admin/edit.tpl:84
+#: modules/Translator/templates/admin/edit.tpl:87
 msgid "Targetstring"
 msgstr "Targetstring"
 
@@ -196,7 +194,7 @@ msgstr "Export to .po-File"
 msgid "Configure translation modules"
 msgstr "Configure translation modules"
 
-#: modules/Translator/lib/Translator/Controller/Admin.php:236
+#: modules/Translator/lib/Translator/Controller/Admin.php:218
 msgid "Translations saved"
 msgstr "Translations saved"
 
@@ -205,11 +203,11 @@ msgstr "Translations saved"
 msgid "Could not fild pot-File"
 msgstr "Could not fild pot-File"
 
-#: modules/Translator/lib/Translator/Controller/Admin.php:494
+#: modules/Translator/lib/Translator/Controller/Admin.php:461
 msgid "Sourcestrings from .pot-File imported"
 msgstr "Sourcestrings from .pot-File imported"
 
-#: modules/Translator/lib/Translator/Controller/Admin.php:506
+#: modules/Translator/lib/Translator/Controller/Admin.php:473
 msgid "Translation from .po-File imported"
 msgstr "Translation from .po-File imported"
 
@@ -229,12 +227,20 @@ msgstr "Import from %s-file"
 msgid "Language: "
 msgstr "Language: "
 
-#: modules/Translator/templates/admin/edit.tpl:48
-#: modules/Translator/templates/admin/view.tpl:45
+#: modules/Translator/templates/admin/edit.tpl:51
+#: modules/Translator/templates/admin/view.tpl:48
 msgid "All"
 msgstr "All"
 
 #: modules/Translator/lib/Translator/Version.php:24
 msgid "Gettext Translation-generation"
 msgstr "Gettext Translation-generation"
+
+#: modules/Translator/templates/admin/addNewTranslations.tpl:24
+msgid "Current module:"
+msgstr "Current module:"
+
+#: modules/Translator/templates/admin/addNewTranslations.tpl:37
+msgid "New Sourcestrings"
+msgstr "New Sourcestrings"
 
