@@ -339,11 +339,11 @@ class Translator_Controller_Admin extends Translator_AbstractController
     }
     
     /**
-     * Triggers the search and import of new Strings to translate.
+     * Starts the search and import of new Strings to translate.
      *
      * Parameters passed to the Template
      * ---------------------------------
-     * * array items The newly added Strings
+     * * array items JSON encoded array containing the modules to search in
      *
      * @return string The rendered template output
      */
@@ -354,10 +354,10 @@ class Translator_Controller_Admin extends Translator_AbstractController
             return LogUtil::registerPermissionError();
         }
         
-        $items = ModUtil::apiFunc($this->name, 'Translation', 'addStrings2Translate');
+        $items = ModUtil::apiFunc($this->name, 'admin', 'getModules');
         
         return $this->view
-            ->assign('items', $items)
+            ->assign('items', json_encode($items))
             ->fetch('admin/addNewTranslations.tpl');
     }
     
