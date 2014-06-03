@@ -4,6 +4,8 @@ function processModule() {
 	pars = {
 		mod: module.mod_id
 	};
+
+    Zikula.Config.ajaxtimeout = 20000;
 	var myAjax = new Zikula.Ajax.Request(
 		Zikula.Config.baseURL + 'ajax.php?module=Translator&func=searchTranslations', 
 		{
