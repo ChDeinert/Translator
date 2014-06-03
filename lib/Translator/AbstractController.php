@@ -103,7 +103,7 @@ abstract class Translator_AbstractController extends Zikula_AbstractController
      * @param string $option Indicator which type of Collection should be created.
      * @return array The Collected Input as array.
      */
-    protected function getCollection(string $option)
+    protected function getCollection($option)
     {
         switch (strtolower($option)) {
             case 'post':

@@ -21,7 +21,7 @@ class Translator_Api_Translation extends Zikula_AbstractApi
     protected $translatorStrings = array();
     
     /**
-     * Get or Count the avaiable Translations
+     * Get or Count the available Translations
      *
      * @param boolean $countonly Indicates whether to get or to count
      * @param string $searchfor Optional; String to search for
@@ -83,10 +83,10 @@ class Translator_Api_Translation extends Zikula_AbstractApi
                         $transObj = DBUtil::selectExpandedObject('translator_translations_lang', array(), $where);
                         
                         if ($transObj == false) {
-                            $items[$key]['translationAvaiable'][$language] = false;
+                            $items[$key]['translationAvailable'][$language] = false;
                             $items[$key]['translations'][$language] = '';
                         } else {
-                            $items[$key]['translationAvaiable'][$language] = true;
+                            $items[$key]['translationAvailable'][$language] = true;
                             $items[$key]['translations'][$language] = str_replace("####", "'", str_replace("++++", "\\", $transObj['targetstring']));
                         }
                     }
@@ -98,7 +98,7 @@ class Translator_Api_Translation extends Zikula_AbstractApi
     }
     
     /**
-     * Get a list of avaiable translations
+     * Get a list of available translations
      *
      * Parameters passed in the $args array:
      * -------------------------------------
@@ -112,7 +112,7 @@ class Translator_Api_Translation extends Zikula_AbstractApi
      *
      * @uses Translator_Api_Translation::getOrCountAll()
      * @param array $args All arguments passed to this function
-     * @return array The list of avaiable translations
+     * @return array The list of available translations
      */
     public function getAll($args)
     {
@@ -158,7 +158,7 @@ class Translator_Api_Translation extends Zikula_AbstractApi
     }
     
     /**
-     * Get the count of avaiable translations
+     * Get the count of available translations
      *
      * Parameters passed in the $args array:
      * -------------------------------------
@@ -168,7 +168,7 @@ class Translator_Api_Translation extends Zikula_AbstractApi
      *
      * @uses Translator_Api_Translation::getOrCountAll()
      * @param array $args All arguments passed to this function
-     * @return int The list of avaiable translations
+     * @return int The list of available translations
      */
     public function countAll($args)
     {
@@ -510,7 +510,7 @@ class Translator_Api_Translation extends Zikula_AbstractApi
     }
     
     /**
-     * Checks if translations are already avaiable
+     * Checks if translations are already available
      *
      * @param string $translationkey
      * @param string $translationArray

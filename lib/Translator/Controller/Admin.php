@@ -26,14 +26,14 @@ class Translator_Controller_Admin extends Translator_AbstractController
     }
     
     /**
-     * View all Gettext msgid's avaiable in the Translator Module.
+     * View all Gettext msgid's available in the Translator Module.
      *
      * Parameters passed via POST
      * ---------------------------------
      * * string searchfor    optional; The String to be searched for.              Default null
      * * string searchby     optional; The DB-field in which to search.            Default 'sourcestring'
      * * int    startnum     optional; Row-number of First item to show.           Default null
-     * * int    itemsperpage optional; Number of the items to show.                Default Module variable 'itemsperpage' if avaiable, otherwise 50
+     * * int    itemsperpage optional; Number of the items to show.                Default Module variable 'itemsperpage' if available, otherwise 50
      * * string sort         optional; The DB-field to order by.                   Default 'trans_id'
      * * string sortdir      optional; The sorting direction.                      Default 'asc'
      * * string mod          optional; The Module to show the Gettext msgids from. Default null
@@ -90,14 +90,14 @@ class Translator_Controller_Admin extends Translator_AbstractController
     }
     
     /**
-     * Edit all Gettext msgids' msgstr avaiable in the Translator Module for each configured language.
+     * Edit all Gettext msgids' msgstr available in the Translator Module for each configured language.
      *
      * Parameters passed via POST
      * ---------------------------------
      * * string searchfor    optional; The String to be searched for.              Default null
      * * string searchby     optional; The DB-field in which to search.            Default 'sourcestring'
      * * int    startnum     optional; Row-number of First item to show.           Default null
-     * * int    itemsperpage optional; Number of the items to show.                Default Module variable 'itemsperpage' if avaiable, otherwise 50
+     * * int    itemsperpage optional; Number of the items to show.                Default Module variable 'itemsperpage' if available, otherwise 50
      * * string sort         optional; The DB-field to order by.                   Default 'trans_id'
      * * string sortdir      optional; The sorting direction.                      Default 'asc'
      * * string mod          optional; The Module to show the Gettext msgids from. Default null
@@ -163,7 +163,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      * * string searchfor              optional; The String to be searched for.                   Default null
      * * string searchby               optional; The DB-field in which to search.                 Default 'sourcestring'
      * * int    startnum               optional; Row-number of First item to show.                Default null
-     * * int    itemsperpage           optional; Number of the items to show.                     Default Module variable 'itemsperpage' if avaiable, otherwise 50
+     * * int    itemsperpage           optional; Number of the items to show.                     Default Module variable 'itemsperpage' if available, otherwise 50
      * * string sort                   optional; The DB-field to order by.                        Default 'trans_id'
      * * string sortdir                optional; The sorting direction.                           Default 'asc'
      * * string mod                    optional; The Module to show the Gettext msgids from.      Default null
@@ -229,8 +229,8 @@ class Translator_Controller_Admin extends Translator_AbstractController
      *
      * Parameters passed to the Template
      * -----------------------------------
-     * * array modules The avaiable modules
-     * * array translationLanguages The avaiable languages
+     * * array modules The available modules
+     * * array translationLanguages The available languages
      * * array links Admin menu links
      *
      * @return string The rendered template output
@@ -256,12 +256,8 @@ class Translator_Controller_Admin extends Translator_AbstractController
             }
         }
         
-        $translationLanguages = $this->getVar('translationLanguages');
-         
-        if (!is_array($translatorLanguages)) {
-            $translatorLanguages = array();
-        }
-         
+        $translationLanguages = $this->getVar('translationLanguages', array());
+
         return $this->view
             ->assign('modules', $modules)
             ->assign('translationLanguages', $translationLanguages)
@@ -366,7 +362,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      *
      * Parameters passed to the Template
      * -----------------------------------
-     * * array importmodules    The avaiable modules
+     * * array importmodules    The available modules
      * * array links            Admin menu links
      *
      * @return string The rendered template output
@@ -378,11 +374,11 @@ class Translator_Controller_Admin extends Translator_AbstractController
             return LogUtil::registerPermissionError();
         }
         
-        $avaiableModules = ModUtil::apiFunc('Extensions', 'Admin', 'listmodules', array('state' => ModUtil::STATE_ACTIVE));
+        $availableModules = ModUtil::apiFunc('Extensions', 'Admin', 'listmodules', array('state' => ModUtil::STATE_ACTIVE));
         $translationLanguages = $this->getVar('translationLanguages');
         $importmodules = array();
         
-        foreach ($avaiableModules as $module) {
+        foreach ($availableModules as $module) {
             $modulepath = 'modules/'.$module['directory'];
             $tmparray = array();
             
@@ -481,7 +477,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      *
      * Parameters passed to the Template
      * -----------------------------------
-     * * array avaiableModules All avaiable modules
+     * * array availableModules All available modules
      *
      * @return string The rendered template output
      */
@@ -492,25 +488,25 @@ class Translator_Controller_Admin extends Translator_AbstractController
             return LogUtil::registerPermissionError();
         }
         
-        $avaiableModules = ModUtil::apiFunc('Extensions', 'Admin', 'listmodules', array('state' => ModUtil::STATE_ACTIVE));
+        $availableModules = ModUtil::apiFunc('Extensions', 'Admin', 'listmodules', array('state' => ModUtil::STATE_ACTIVE));
         $modulesVar = $this->getVar('translatorModules');
         
         if (!is_array($modulesVar)) {
             $modulesVar = array();
         }
         
-        foreach ($avaiableModules as $key => $val) {
+        foreach ($availableModules as $key => $val) {
             $tmpkey = array_search($val['id'], $modulesVar);
             
             if ($tmpkey !== false) {
-                $avaiableModules[$key]['active'] = true;
+                $availableModules[$key]['active'] = true;
             } else {
-                $avaiableModules[$key]['active'] = false;
+                $availableModules[$key]['active'] = false;
             }
         }
         
         return $this->view
-            ->assign('avaiableModules', $avaiableModules)
+            ->assign('availableModules', $availableModules)
             ->fetch('admin/configModules.tpl');
     }
     

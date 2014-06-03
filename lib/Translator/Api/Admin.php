@@ -44,7 +44,7 @@ class Translator_Api_Admin extends Zikula_AbstractApi
     /**
      * Gets available admin panel links.
      *
-     * Returns an Array with avaiable admin panel links
+     * Returns an Array with available admin panel links
      *
      * @return array
      */
@@ -54,7 +54,7 @@ class Translator_Api_Admin extends Zikula_AbstractApi
         
         $links[] = array(
             'url' => ModUtil::url('Translator', 'admin', 'view'),
-            'text' => $this->__('Avaiable Translations'),
+            'text' => $this->__('Available Translations'),
             'class' => 'z-icon-es-view',
             'links' => $this->getSecondaryLinks(),
         );
@@ -73,9 +73,9 @@ class Translator_Api_Admin extends Zikula_AbstractApi
     }
     
     /**
-     * Gets avaiable secondary/dropdown admin panel links
+     * Gets available secondary/dropdown admin panel links
      *
-     * Returns an Array with avaiable secondary/dropdown admin panel links
+     * Returns an Array with available secondary/dropdown admin panel links
      *
      * @return array
      */

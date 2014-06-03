@@ -19,7 +19,7 @@ msgstr ""
 #: modules/Translator/lib/Translator/Api/Admin.php:57
 #: modules/Translator/templates/admin/edit.tpl:16
 #: modules/Translator/templates/admin/view.tpl:13
-msgid "Avaiable Translations"
+msgid "Available Translations"
 msgstr ""
 
 #: modules/Translator/lib/Translator/Api/Admin.php:63

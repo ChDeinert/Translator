@@ -10,7 +10,7 @@
 {/pageaddvarblock} {/strip} {adminheader}
 <div class="z-admin-content-pagetitle">
     {icon type="view" size="small"}
-    <h3>{gt text="Avaiable Translations"}</h3>
+    <h3>{gt text="Available Translations"}</h3>
 </div>
 
 <div class="z-clearfix">
@@ -82,7 +82,7 @@
                 <td align="center">
                     {foreach from=$translationLanguages item='language'}
                         {$language}
-                        {if ($item.translationAvaiable[$language])}
+                        {if ($item.translationAvailable[$language])}
                             {img modname='Translator' src='icons/16x16/checkbox-checked.png'}
                         {else}
                             {img modname='Translator' src='icons/16x16/checkbox-unchecked.png'}

@@ -57,7 +57,7 @@ In **Translator** there are different ways to add the strings you want to transl
 
 ### 4. Create translations
 
-You can create or change translations under *'edit avaiable translations'*. Here you can add and/or change existing translations by writing them into the textfields.
+You can create or change translations under *'edit available translations'*. Here you can add and/or change existing translations by writing them into the textfields.
 
 Don't forget to save the translations, before you change view settings or go to another page.
 
