@@ -124,11 +124,27 @@ class Translator_Api_Import extends Zikula_AbstractApi
             while (($line = fgets($filehandler)) !== false) {
                 if (substr($line, 0, 2) == '#:') {
                     $occurrence = substr($line, 2);
-                    $occurrence = explode(':', $occurrence);
-                    $occurrences[] = array(
-                        'file' => $occurrence[0],
-                        'line' => $occurrence[1],
-                    );
+                    // Remove whitespace and new line characters.
+                    $occurrence = trim($occurrence);
+                    if (substr_count($occurrence, ':') > 1) {
+                        // Example:
+                        // lib/EventManager/Util.php:382 templates/Admin/FilterUsers.tpl:6
+                        $occurrence = preg_split('#:|(\d+)#', $occurrence, -1,  PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+                        for ($i = 0; $i < count($occurrence) / 2; $i++) {
+                            $occurrences[] = array(
+                                'file' => $occurrence[$i * 2],
+                                'line' => $occurrence[$i * 2 + 1],
+                            );
+                        }
+                    } else {
+                        // Example:
+                        // lib/EventManager/Util.php:280
+                        $occurrence = explode(':', $occurrence);
+                        $occurrences[] = array(
+                            'file' => $occurrence[0],
+                            'line' => $occurrence[1],
+                        );
+                    }
                 }
                 
                 if (substr($line, 0, 5) == 'msgid') {
