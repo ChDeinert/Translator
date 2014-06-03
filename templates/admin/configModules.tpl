@@ -27,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-            {foreach from=$avaiableModules item='item'}
+            {foreach from=$availableModules item='item'}
                 <tr class="{cycle values="z-odd,z-even"}">
                     <td>{$item.id}</td>
                     <td>{$item.name}</td>

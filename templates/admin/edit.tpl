@@ -13,7 +13,7 @@
 {adminheader}
 <div class="z-admin-content-pagetitle">
     {icon type="view" size="small"}
-    <h3>{gt text="Avaiable Translations"}</h3>
+    <h3>{gt text="Available Translations"}</h3>
 </div>
 
 <div class="z-clearfix">
