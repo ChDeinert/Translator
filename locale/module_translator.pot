@@ -7,240 +7,240 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-19 13:55:21+0100\n"
-"PO-Revision-Date: 2014-03-19 13:55:21+0100\n"
+"POT-Creation-Date: 2014-06-06 00:59:18+0200\n"
+"PO-Revision-Date: 2014-06-06 00:59:18+0200\n"
 "Last-Translator: \n"
 "Language-Team:  \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
+"Language: \n"
 
-#: modules/Translator/lib/Translator/Api/Admin.php:57
-#: modules/Translator/templates/admin/edit.tpl:16
-#: modules/Translator/templates/admin/view.tpl:13
-msgid "Avaiable Translations"
-msgstr "Verfügbare Übersetzungen"
+#: modules/Translator/templates/admin/configLanguages.tpl:46
+#: modules/Translator/templates/admin/configModules.tpl:46
+#: modules/Translator/templates/admin/edit.tpl:113
+msgid "Cancel"
+msgstr ""
+
+#: modules/Translator/templates/admin/configModules.tpl:24
+#: modules/Translator/templates/admin/edit.tpl:81
+#: modules/Translator/templates/admin/view.tpl:69
+msgid "ID"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Api/Admin.php:63
 msgid "Configure translation languages"
-msgstr "Übersetzungssprachen Konfigurieren"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Api/Admin.php:103
 msgid "Add New Translation Strings"
-msgstr "Neue Übersetzungsstrings hinzufügen"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Api/Admin.php:108
 msgid "Import Translation from Module"
-msgstr "Aus Modul importieren"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Version.php:23
 msgid "Translator"
-msgstr "Translator"
+msgstr ""
 
 #: modules/Translator/templates/admin/addNewTranslations.tpl:21
 msgid "New Translationstrings"
-msgstr "Neue Übersetzungsstrings"
+msgstr ""
 
 #: modules/Translator/templates/admin/edit.tpl:84
 #: modules/Translator/templates/admin/view.tpl:72
 msgid "Sourcestring"
-msgstr "Quell-String"
+msgstr ""
 
 #: modules/Translator/templates/admin/configLanguages.tpl:39
 #: modules/Translator/templates/admin/configModules.tpl:39
 #: modules/Translator/templates/admin/edit.tpl:106
 #: modules/Translator/templates/admin/view.tpl:96
 msgid "No items found."
-msgstr "Nichts gefunden"
+msgstr ""
 
 #: modules/Translator/templates/admin/addNewTranslations.tpl:46
 msgid "OK"
-msgstr "OK"
+msgstr ""
 
 #: modules/Translator/templates/admin/configModules.tpl:16
 msgid "Configure Modules to translate"
-msgstr "Module zum Übersetzen konfigurieren"
-
-#: modules/Translator/templates/admin/configModules.tpl:24
-#: modules/Translator/templates/admin/edit.tpl:81
-#: modules/Translator/templates/admin/view.tpl:69
-msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #: modules/Translator/templates/admin/configModules.tpl:25
 msgid "Modulename"
-msgstr "Modulname"
+msgstr ""
 
 #: modules/Translator/templates/admin/configModules.tpl:26
 msgid "Active for Translation"
-msgstr "Für Übersetzung aktiviert"
+msgstr ""
 
 #: modules/Translator/templates/admin/configLanguages.tpl:45
 #: modules/Translator/templates/admin/configModules.tpl:45
 #: modules/Translator/templates/admin/edit.tpl:112
 msgid "Save"
-msgstr "Speichern"
-
-#: modules/Translator/templates/admin/configLanguages.tpl:46
-#: modules/Translator/templates/admin/configModules.tpl:46
-#: modules/Translator/templates/admin/edit.tpl:113
-msgid "Cancel"
-msgstr "Abbruch"
+msgstr ""
 
 #: modules/Translator/templates/admin/configLanguages.tpl:16
 msgid "Configuration of languages to translate"
-msgstr "Konfiguration der Sprachen zum Übersetzen"
+msgstr ""
 
 #: modules/Translator/templates/admin/configLanguages.tpl:25
 msgid "Langcode"
-msgstr "Sprachcode"
+msgstr ""
 
 #: modules/Translator/templates/admin/configLanguages.tpl:26
 msgid "Language"
-msgstr "Sprache"
+msgstr ""
 
 #: modules/Translator/templates/admin/edit.tpl:43
 #: modules/Translator/templates/admin/view.tpl:40
 msgid "Items per page"
-msgstr "Anzahl pro Seite"
+msgstr ""
 
 #: modules/Translator/templates/admin/view.tpl:74
 msgid "Languages"
-msgstr "Sprachen"
+msgstr ""
 
 #: modules/Translator/templates/admin/view.tpl:91
 msgid "No Language configured."
-msgstr "keine Sprache Konfiguriert"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Api/Admin.php:88
 msgid "View Available Translations"
-msgstr "Verfügbare Übersetzungen anzeigen"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Api/Admin.php:93
 msgid "Edit Available Translations"
-msgstr "Verfügbare Übersetzungen bearbeiten"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Api/Translation.php:235
-msgid "Could not update Translation '%s'"
-msgstr "Übersetzung '%s' konnte nicht aktualisiert werden"
+msgid "Could not update Translation ####%s####"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Api/Translation.php:247
-msgid "Could not insert Translation '%s'"
-msgstr "Übersetzung '%s' konnte nicht hinzugefügt werden"
+msgid "Could not insert Translation ####%s####"
+msgstr ""
 
-#: modules/Translator/lib/Translator/Controller/Admin.php:543
-#: modules/Translator/lib/Translator/Controller/Admin.php:614
+#: modules/Translator/lib/Translator/Controller/Admin.php:611
+#: modules/Translator/lib/Translator/Controller/Admin.php:540
 msgid "Configuration successfully updated"
-msgstr "Konfiguration erfolgreich aktualisiert"
+msgstr ""
 
 #: modules/Translator/templates/admin/edit.tpl:55
 #: modules/Translator/templates/admin/view.tpl:52
 msgid "Moduletranslations"
-msgstr "Modulübersetzungen"
+msgstr ""
 
 #: modules/Translator/templates/admin/edit.tpl:87
 msgid "Targetstring"
-msgstr "Ziel-String"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Api/Admin.php:98
 #: modules/Translator/templates/admin/exportTranslations.tpl:16
 msgid "Export Translations"
-msgstr "Übersetzungen Exportieren"
+msgstr ""
 
-#: modules/Translator/lib/Translator/Api/Export.php:91
+#: modules/Translator/lib/Translator/Api/Export.php:92
 msgid "Created .pot-File for module %s"
-msgstr ".pot-Datei für Modul %s erstellt"
+msgstr ""
 
-#: modules/Translator/lib/Translator/Api/Export.php:93
+#: modules/Translator/lib/Translator/Api/Export.php:94
 msgid "Error while creating .pot-File for module %s"
-msgstr "Fehler beim erstellen der .pot-Datei für das Modul %s"
+msgstr ""
 
-#: modules/Translator/lib/Translator/Api/Export.php:195
+#: modules/Translator/lib/Translator/Api/Export.php:197
 msgid "Created .po-File for module %s"
-msgstr ".po-Datei für Modul %s erstellt"
+msgstr ""
 
-#: modules/Translator/lib/Translator/Api/Export.php:201
+#: modules/Translator/lib/Translator/Api/Export.php:203
 msgid "Error while creating .po-File for module %s"
-msgstr "Fehler beim erstellen der .po-Datei für das Modul %s"
-
-#: modules/Translator/lib/Translator/Api/Export.php:222
-msgid "Compiled .po- to .mo-File for module %s"
-msgstr ".po-Datei des Moduls %s zu .mo-Datei kompiliert"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Api/Export.php:224
+msgid "Compiled .po- to .mo-File for module %s"
+msgstr ""
+
+#: modules/Translator/lib/Translator/Api/Export.php:226
 msgid "Error while compiling .po- to .mo-File for module %s"
-msgstr "Fehler beim kompilieren der .po-Datei des Moduls %s in eine .mo-Datei"
+msgstr ""
 
 #: modules/Translator/templates/admin/exportTranslations.tpl:38
 #: modules/Translator/templates/admin/importTranslations.tpl:38
 msgid "Module"
-msgstr "Modul"
+msgstr ""
 
 #: modules/Translator/templates/admin/exportTranslations.tpl:39
 msgid "All languages"
-msgstr "Alle Sprachen"
+msgstr ""
 
 #: modules/Translator/templates/admin/exportTranslations.tpl:52
 msgid "Export to .pot-File"
-msgstr "Export in eine .pot-Datei"
+msgstr ""
 
-#: modules/Translator/templates/admin/exportTranslations.tpl:63
 #: modules/Translator/templates/admin/exportTranslations.tpl:56
+#: modules/Translator/templates/admin/exportTranslations.tpl:63
 msgid "Export to .po-File"
-msgstr "Export in eine .po-Datei"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Api/Admin.php:68
 msgid "Configure translation modules"
-msgstr "Zu Übersetzende Module konfigurieren"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Controller/Admin.php:218
 msgid "Translations saved"
-msgstr "Übersetzungen gespeichert"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Api/Import.php:82
-#: modules/Translator/lib/Translator/Api/Import.php:173
+#: modules/Translator/lib/Translator/Api/Import.php:189
 msgid "Could not fild pot-File"
-msgstr "pot-Datei konnte nicht gefunden werden"
+msgstr ""
 
-#: modules/Translator/lib/Translator/Controller/Admin.php:461
+#: modules/Translator/lib/Translator/Controller/Admin.php:458
 msgid "Sourcestrings from .pot-File imported"
-msgstr "Quell-Strings aus der .pot-Datei importiert"
+msgstr ""
 
-#: modules/Translator/lib/Translator/Controller/Admin.php:473
+#: modules/Translator/lib/Translator/Controller/Admin.php:470
 msgid "Translation from .po-File imported"
-msgstr "Übersetzungen aus der .po-Datei importiert"
+msgstr ""
 
 #: modules/Translator/templates/admin/importTranslations.tpl:16
 msgid "Import Translations"
-msgstr "Übersetzungen importieren"
+msgstr ""
 
 #: modules/Translator/templates/admin/importTranslations.tpl:39
 msgid "Files"
-msgstr "Dateien"
+msgstr ""
 
 #: modules/Translator/templates/admin/importTranslations.tpl:49
 msgid "Import from %s-file"
-msgstr "Aus %s-Datei importieren"
+msgstr ""
 
 #: modules/Translator/templates/admin/importTranslations.tpl:51
 msgid "Language: "
-msgstr "Sprache:"
+msgstr ""
 
 #: modules/Translator/templates/admin/edit.tpl:51
 #: modules/Translator/templates/admin/view.tpl:48
 msgid "All"
-msgstr "Alle"
+msgstr ""
 
 #: modules/Translator/lib/Translator/Version.php:24
 msgid "Gettext Translation-generation"
-msgstr "Gettext Übersetzungs Generator"
+msgstr ""
+
+#: modules/Translator/lib/Translator/Api/Admin.php:57
+#: modules/Translator/templates/admin/edit.tpl:16
+#: modules/Translator/templates/admin/view.tpl:13
+msgid "Available Translations"
+msgstr ""
 
 #: modules/Translator/templates/admin/addNewTranslations.tpl:24
 msgid "Current module:"
-msgstr "Aktuelles Modul:"
+msgstr ""
 
 #: modules/Translator/templates/admin/addNewTranslations.tpl:37
 msgid "New Sourcestrings"
-msgstr "Neue Quellstrings"
+msgstr ""
 
