@@ -83,11 +83,12 @@ class Translator_Api_Export extends Zikula_AbstractApi
             mkdir($modulepath.'/locale');
         }
         
-        $file = fopen($modulepath.'/locale/module_'.$modInfo['name'].'.pot', 'w');
+        $modname_lc = mb_strtolower($modInfo['name']);
+        $file = fopen($modulepath.'/locale/module_'.$modname_lc.'.pot', 'w');
         fwrite($file, $filecontent);
         fclose($file);
         
-        if (file_exists($modulepath.'/locale/module_'.$modInfo['name'].'.pot')) {
+        if (file_exists($modulepath.'/locale/module_'.$modname_lc.'.pot')) {
             LogUtil::registerStatus($this->__f('Created .pot-File for module %s', $modInfo['displayname']));
         } else {
             LogUtil::registerError($this->__f('Error while creating .pot-File for module %s', $modInfo['displayname']));
@@ -187,14 +188,15 @@ class Translator_Api_Export extends Zikula_AbstractApi
             mkdir($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES', 0777, true);
         }
         
-        $file = fopen($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES/module_'.$modInfo['name'].'.po', 'w');
+        $modname_lc = mb_strtolower($modInfo['name']);
+        $file = fopen($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES/module_'.$modname_lc.'.po', 'w');
         fwrite($file, $filecontent);
         fclose($file);
         
-        if (file_exists($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES/module_'.$modInfo['name'].'.po')) {
+        if (file_exists($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES/module_'.$modname_lc.'.po')) {
             LogUtil::registerStatus($this->__f('Created .po-File for module %s', $modInfo['displayname']));
             $this->compilePo2Mo(
-                $modulepath.'/locale/'.$args['language'].'/LC_MESSAGES/module_'.$modInfo['name'].'.po',
+                $modulepath.'/locale/'.$args['language'].'/LC_MESSAGES/module_'.$modname_lc.'.po',
                 $modInfo['displayname']
             );
         } else {

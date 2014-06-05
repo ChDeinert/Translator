@@ -380,20 +380,21 @@ class Translator_Controller_Admin extends Translator_AbstractController
         
         foreach ($availableModules as $module) {
             $modulepath = 'modules/'.$module['directory'];
+            $modname_lc = mb_strtolower($module['name']);
             $tmparray = array();
             
-            if (file_exists($modulepath.'/locale/module_'.$module['name'].'.pot')) {
+            if (file_exists($modulepath.'/locale/module_'.$modname_lc.'.pot')) {
                 $tmparray[] = array(
-                    'file' => $modulepath.'/locale/module_'.$module['name'].'.pot',
+                    'file' => $modulepath.'/locale/module_'.$modname_lc.'.pot',
                     'language' => '',
                     'type' => 'pot',
                 );
             }
             
             foreach ($translationLanguages as $language) {
-                if (file_exists($modulepath.'/locale/'.$language.'/LC_MESSAGES/module_'.$module['name'].'.po')) {
+                if (file_exists($modulepath.'/locale/'.$language.'/LC_MESSAGES/module_'.$modname_lc.'.po')) {
                     $tmparray[] = array(
-                        'file' => $modulepath.'/locale/'.$language.'/LC_MESSAGES/module_'.$module['name'].'.po',
+                        'file' => $modulepath.'/locale/'.$language.'/LC_MESSAGES/module_'.$modname_lc.'.po',
                         'language' => $language,
                         'type' => 'po',
                     );
