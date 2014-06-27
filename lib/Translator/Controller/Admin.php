@@ -28,7 +28,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
     /**
      * View all Gettext msgid's available in the Translator Module.
      *
-     * Parameters passed via POST
+     * Parameters passed via GET
      * ---------------------------------
      * * string searchfor    optional; The String to be searched for.              Default null
      * * string searchby     optional; The DB-field in which to search.            Default 'sourcestring'
@@ -92,7 +92,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
     /**
      * Edit all Gettext msgids' msgstr available in the Translator Module for each configured language.
      *
-     * Parameters passed via POST
+     * Parameters passed via GET
      * ---------------------------------
      * * string searchfor    optional; The String to be searched for.              Default null
      * * string searchby     optional; The DB-field in which to search.            Default 'sourcestring'
@@ -420,7 +420,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      *
      * Redirects to importTranslations-Controller.
      *
-     * Parameters passed via POST
+     * Parameters passed via GET
      * ---------------------------------
      * * int    mod_id                  The id of the Module
      * * string file The                file which holds the translations

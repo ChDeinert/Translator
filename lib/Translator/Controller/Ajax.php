@@ -13,7 +13,16 @@
  */
 class Translator_Controller_Ajax extends Zikula_Controller_AbstractAjax
 {
-    public function searchTranslations($args)
+    /**
+     * Starts the search for new msgids in the passed module and returns the found msgids
+     *
+     * Parameters passed via POST
+     * -----------------------------------
+     * * int    mod     The ID of the module to search in
+     *
+     * @return Zikula_Response_Ajax Containing an array with the msgids found in the current module
+     */
+    public function searchTranslations()
     {
         $this->checkAjaxToken();
         $this->throwForbiddenUnless(SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN));
