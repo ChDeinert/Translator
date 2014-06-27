@@ -8,12 +8,19 @@
  */
 
 /**
- * Abstract API for Translator module.
+ * Abstract Controller for Translator module.
  *
  * Containing Form Utils because the mess that would be created with Zikula core functionality
  */
 abstract class Translator_AbstractController extends Zikula_AbstractController
 {
+    /**
+     * Container for Controller validator instance
+     *
+     * @var Translator_Validator_Controller
+     */
+    protected $validator;
+    
     /**
      * Post initialise: called from constructor
      *
@@ -28,7 +35,7 @@ abstract class Translator_AbstractController extends Zikula_AbstractController
     /**
      * Assigns Key-Value pairs to the View
      *
-     * @param array $argArray Referencial array of Arguments
+     * @param array $argArray Referential array of Arguments
      * @throws Zikula_Exception_Fatal Thrown if no array is given
      */
     protected function assign2View(array &$argArray)
@@ -45,7 +52,7 @@ abstract class Translator_AbstractController extends Zikula_AbstractController
     /**
      * Alias for Get with Collection of type 'any'
      *
-     * @param array $argArray Referencial array of Arguments.
+     * @param array $argArray Referential array of Arguments.
      * @see ZimpleForm_Util::get()
      * @return void
      */
@@ -57,7 +64,7 @@ abstract class Translator_AbstractController extends Zikula_AbstractController
     /**
      * Alias for Get with Collection of type 'post'
      *
-     * @param array $argArray Referencial array of Arguments.
+     * @param array $argArray Referential array of Arguments.
      * @return void
      */
     protected function getPost(array &$argArray)
@@ -68,7 +75,7 @@ abstract class Translator_AbstractController extends Zikula_AbstractController
     /**
      * Alias for Get with Collection of type 'get'
      *
-     * @param array $argArray Referencial array of Arguments.
+     * @param array $argArray Referential array of Arguments.
      * @return void
      */
     protected function getGet(array &$argArray)
@@ -79,7 +86,7 @@ abstract class Translator_AbstractController extends Zikula_AbstractController
     /**
      * Changes the given argArray to contain the Values it finds in the used Collection.
      *
-     * @param array $argArray Referencial array of Arguments.
+     * @param array $argArray Referential array of Arguments.
      * @param string $option Indicator which type of Collection should used.
      * @throws Zikula_Exception_Fatal Thrown if $argArray is not an array
      * @return void

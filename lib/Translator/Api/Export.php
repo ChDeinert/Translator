@@ -11,7 +11,7 @@
 /**
  * This Class provides the API for the Export
  */
-class Translator_Api_Export extends Zikula_AbstractApi
+class Translator_Api_Export extends Translator_AbstractApi
 {
     /**
      * Export the Translationstrings into an .pot file.
@@ -26,9 +26,7 @@ class Translator_Api_Export extends Zikula_AbstractApi
      */
     public function export2Pot($args)
     {
-        if (!isset($args['mod_id']) || empty($args['mod_id'])) {
-            throw new Zikula_Exception_Fatal();
-        }
+        $this->validator->hasValues($args, ['mod_id']);
         
         $modInfo = ModUtil::apiFunc('Extensions', 'admin', 'modify', array('id' => $args['mod_id']));
         $filecontent = '# Automatic generated POT-File.'."\r\n";
@@ -109,9 +107,7 @@ class Translator_Api_Export extends Zikula_AbstractApi
      */
     public function export2Po($args)
     {
-        if (!isset($args['mod_id']) || empty($args['mod_id']) || !isset($args['language']) || empty($args['language'])) {
-            throw new Zikula_Exception_Fatal();
-        }
+        $this->validator->hasValues($args, ['mod_id', 'language']);
         
         $modInfo = ModUtil::apiFunc('Extensions', 'admin', 'modify', array('id' => $args['mod_id']));
         $filecontent = '# Automatic generated POT-File.'."\r\n";
@@ -225,5 +221,16 @@ class Translator_Api_Export extends Zikula_AbstractApi
         } else {
             LogUtil::registerError($this->__f('Error while compiling .po- to .mo-File for module %s', $moddesc));
         }
+    }
+    
+    /**
+     * Post initialise: called from constructor
+     *
+     * @see Zikula_AbstractBase::postInitialize()
+     */
+    protected function postInitialize()
+    {
+        parent::postInitialize();
+        $this->validator = new Translator_Validator_Api();
     }
 }

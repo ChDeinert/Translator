@@ -11,7 +11,7 @@
 /**
  * This Class provides the API for the Import
  */
-class Translator_Api_Import extends Zikula_AbstractApi
+class Translator_Api_Import extends Translator_AbstractApi
 {
     /**
      * Imports msgids from a .pot file
@@ -27,9 +27,7 @@ class Translator_Api_Import extends Zikula_AbstractApi
      */
     public function importFromPot($args)
     {
-        if (!isset($args['mod_id']) || empty($args['mod_id']) || !isset($args['file']) || empty($args['file'])) {
-            throw new Zikula_Exception_Fatal();
-        }
+        $this->validator->hasValues($args, ['mod_id', 'file']);
         
         if (file_exists($args['file'])) {
             $translations = array();
@@ -118,16 +116,7 @@ class Translator_Api_Import extends Zikula_AbstractApi
      */
     public function importFromPo($args)
     {
-        if (
-            !isset($args['mod_id'])
-            || empty($args['mod_id'])
-            || !isset($args['file'])
-            || empty($args['file'])
-            || !isset($args['language'])
-            || empty($args['language'])
-        ) {
-            throw new Zikula_Exception_Fatal();
-        }
+        $this->validator->hasValues($args, ['mod_id', 'file', 'language']);
         
         if (file_exists($args['file'])) {
             $translations = array();
@@ -351,5 +340,16 @@ class Translator_Api_Import extends Zikula_AbstractApi
                 }
             }
         }
+    }
+    
+    /**
+     * Post initialise: called from constructor
+     *
+     * @see Zikula_AbstractBase::postInitialize()
+     */
+    protected function postInitialize()
+    {
+        parent::postInitialize();
+        $this->validator = new Translator_Validator_Api();
     }
 }

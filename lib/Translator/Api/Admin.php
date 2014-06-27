@@ -11,7 +11,7 @@
 /**
  * Administrative API functions for the Translator module.
  */
-class Translator_Api_Admin extends Zikula_AbstractApi
+class Translator_Api_Admin extends Translator_AbstractApi
 {
     /**
      * Gets Modules activated for translation

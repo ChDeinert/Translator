@@ -284,13 +284,11 @@ class Translator_Controller_Admin extends Translator_AbstractController
             return LogUtil::registerPermissionError();
         }
         
-        $mod_id = $this->request->query->get('mod_id', null);
+        $params = array('mod_id' => null);
+        $this->getGet($params);
+        $this->validator->checkNotNull($params, array('mod_id'));
         
-        if ($mod_id == null) {
-            throw new Zikula_Exception_Forbidden();
-        }
-        
-        ModUtil::apiFunc($this->name, 'Export', 'export2Pot', array('mod_id' => $mod_id));
+        ModUtil::apiFunc($this->name, 'Export', 'export2Pot', $params);
         
         $this->redirect(ModUtil::url($this->name, 'admin', 'exportTranslations'));
     }
@@ -315,20 +313,21 @@ class Translator_Controller_Admin extends Translator_AbstractController
             return LogUtil::registerPermissionError();
         }
         
-        $mod_id = $this->request->query->get('mod_id', null);
-        $language = $this->request->query->get('language', null);
+        $params = array(
+            'mod_id' => null,
+            'language' => null,
+        );
+        $this->getGet($params);
+        $this->validator->checkNotNull($params, array('mod_id'));
         
-        if ($mod_id == null) {
-            throw new Zikula_Exception_Forbidden();
-        }
-        if ($language == null) {
+        if ($params['language'] == null) {
             $translationLanguages = $this->getVar('translationLanguages');
             
             foreach ($translationLanguages as $lang) {
-                ModUtil::apiFunc($this->name, 'Export', 'export2po', array('mod_id' => $mod_id, 'language' => $lang));
+                ModUtil::apiFunc($this->name, 'Export', 'export2po', array('mod_id' => $params['mod_id'], 'language' => $lang));
             }
         } else {
-            ModUtil::apiFunc($this->name, 'Export', 'export2po', array('mod_id' => $mod_id, 'language' => $language));
+            ModUtil::apiFunc($this->name, 'Export', 'export2po', $params);
         }
         
         $this->redirect(ModUtil::url($this->name, 'admin', 'exportTranslations'));
@@ -438,20 +437,14 @@ class Translator_Controller_Admin extends Translator_AbstractController
             return LogUtil::registerPermissionError();
         }
         
-        $mod_id = $this->request->query->get('mod_id', null);
-        $file = $this->request->query->get('file', null);
-        $filetype = $this->request->query->get('filetype', null);
-        $language = $this->request->query->get('language', null);
-        
-        if ($mod_id == null) {
-            throw new Zikula_Exception_Fatal();
-        }
-        if ($file == null) {
-            throw new Zikula_Exception_Fatal();
-        }
-        if ($filetype == null) {
-            throw new Zikula_Exception_Fatal();
-        }
+        $params = array(
+            'mod_id' => null,
+            'file' => null,
+            'filetype' => null,
+            'language' => null,
+        );
+        $this->getGet($params);
+        $this->validator->checkNotNull($params, array('mod_id', 'file', 'filetype'));
         
         if ($filetype == 'pot') {
             ModUtil::apiFunc($this->name, 'Import', 'importFromPot', array('mod_id' => $mod_id, 'file' => $file));
@@ -612,5 +605,16 @@ class Translator_Controller_Admin extends Translator_AbstractController
         }
         
         $this->redirect(ModUtil::url($this->name, 'admin', 'configLanguages'));
+    }
+    
+    /**
+     * Post initialise: called from constructor
+     *
+     * @see Translator_AbstractController::postInitialize()
+     */
+    protected function postInitialize()
+    {
+        parent::postInitialize();
+        $this->validator = new Translator_Validator_Controller();
     }
 }

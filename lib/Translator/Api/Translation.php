@@ -11,7 +11,7 @@
 /**
  * This Class provides the API for the Translation
  */
-class Translator_Api_Translation extends Zikula_AbstractApi
+class Translator_Api_Translation extends Translator_AbstractApi
 {
     /**
      * List of Translation strings to import.
@@ -116,34 +116,7 @@ class Translator_Api_Translation extends Zikula_AbstractApi
      */
     public function getAll($args)
     {
-        // Default Parameter
-        if (!isset($args['searchfor'])) {
-            $args['searchfor'] = null;
-        }
-        
-        if (!isset($args['searchby']) || empty($args['searchby'])) {
-            $args['searchby'] = 'sourcestring';
-        }
-        
-        if (!isset($args['mod']) || empty($args['mod'])) {
-            $args['mod'] = '';
-        }
-        
-        if (!isset($args['startnum'])) {
-            $args['startnum'] = -1;
-        }
-        
-        if (!isset($args['itemsperpage'])) {
-            $args['itemsperpage'] = $this->getVar('itemsperpage', 20);
-        }
-        
-        if (!isset($args['sort'])) {
-            $args['sort'] = 'trans_id';
-        }
-        
-        if (!isset($args['sortdir'])) {
-            $args['sortdir'] = 'asc';
-        }
+        $this->validator->checkGetAllParams($args);
         
         return $this->getOrCountAll(
             false,
@@ -172,18 +145,7 @@ class Translator_Api_Translation extends Zikula_AbstractApi
      */
     public function countAll($args)
     {
-        // Default Parameter
-        if (!isset($args['searchfor'])) {
-            $args['searchfor'] = null;
-        }
-        
-        if (!isset($args['searchby']) || empty($args['searchby'])) {
-            $args['searchby'] = 'sourcestring';
-        }
-        
-        if (!isset($args['mod']) || empty($args['mod'])) {
-            $args['module'] = '';
-        }
+        $this->validator->checkCountAllParams($args);
         
         return $this->getOrCountAll(true, $args['searchfor'], $args['searchby'], $args['mod']);
     }
@@ -203,17 +165,7 @@ class Translator_Api_Translation extends Zikula_AbstractApi
      */
     public function save($args)
     {
-        if (!isset($args['trans_id']) || empty($args['trans_id'])) {
-            throw new Zikula_Exception_Fatal();
-        }
-        
-        if (!isset($args['language']) || empty($args['language'])) {
-            throw new Zikula_Exception_Fatal();
-        }
-        
-        if (!isset($args['targetstring']) || $args['targetstring'] == null) {
-            $args['targetstring'] = '';
-        }
+        $this->validator->checkSaveParams($args);
         
         $where = " trans_id=".$args['trans_id']." and `language`='".$args['language']."' ";
         $langObj = DBUtil::selectExpandedObject('translator_translations_lang', array(), $where);
@@ -259,9 +211,7 @@ class Translator_Api_Translation extends Zikula_AbstractApi
      */
     public function addStrings2Translate($args)
     {
-        if (!isset($args['mod']) || empty($args['mod'])) {
-            throw new Zikula_Exception_Fatal();
-        }
+        $this->validator->hasValues($args, array('mod'));
         
         $modules2process = $this->getVar('translatorModules');
         
@@ -578,5 +528,16 @@ class Translator_Api_Translation extends Zikula_AbstractApi
         }
         
         return $translationArray;
+    }
+    
+    /**
+     * Post initialise: called from constructor
+     *
+     * @see Zikula_AbstractBase::postInitialize()
+     */
+    protected function postInitialize()
+    {
+        parent::postInitialize();
+        $this->validator = new Translator_Validator_ApiTranslation();
     }
 }
