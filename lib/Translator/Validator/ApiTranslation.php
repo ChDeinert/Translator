@@ -13,6 +13,13 @@
  */
 class Translator_Validator_ApiTranslation extends Translator_Validator_Api
 {
+    /**
+     * Validates the Parameters passed to the countAll Method
+     *
+     * The parameters will be set to a default value if not set or empty
+     *
+     * @param array $argsArray Referential pointer to the Array that should be validated
+     */
     public function checkCountAllParams(array &$argsArray)
     {
         if (!isset($args['searchfor'])) {
@@ -26,6 +33,14 @@ class Translator_Validator_ApiTranslation extends Translator_Validator_Api
         }
     }
     
+    /**
+     * Validates the Parameters passed to the getAll Method
+     *
+     * The parameters will be set to a default values if not set or empty
+     *
+     * @uses Translator_Validator_ApiTranslations::checkCountAllParams For a part of the Parameters
+     * @param array $argsArray Referential pointer to the Array that should be validated
+     */
     public function checkGetAllParams(array &$argsArray)
     {
         $this->checkCountAllParams($argsArray);
@@ -44,6 +59,11 @@ class Translator_Validator_ApiTranslation extends Translator_Validator_Api
         }
     }
     
+    /**
+     * Validates the User input for writing Translations into the database
+     *
+     * @param array $argsArray Referential pointer to the Array that should be validated
+     */
     public function checkSaveParams(array &$argsArray)
     {
         $this->hasValues($argsArray, array('trans_id', 'language'));
