@@ -446,20 +446,11 @@ class Translator_Controller_Admin extends Translator_AbstractController
         $this->getGet($params);
         $this->validator->checkNotNull($params, array('mod_id', 'file', 'filetype'));
         
-        if ($filetype == 'pot') {
-            ModUtil::apiFunc($this->name, 'Import', 'importFromPot', array('mod_id' => $mod_id, 'file' => $file));
+        if ($params['filetype'] == 'pot') {
+            ModUtil::apiFunc($this->name, 'Import', 'importFromPot', $params);
             LogUtil::registerStatus($this->__('Sourcestrings from .pot-File imported'));
-        } elseif ($filetype == 'po') {
-            ModUtil::apiFunc(
-                $this->name,
-                'Import',
-                'importFromPo',
-                array(
-                    'mod_id' => $mod_id,
-                    'file' => $file,
-                    'language' => $language,
-                )
-            );
+        } elseif ($params['filetype'] == 'po') {
+            ModUtil::apiFunc($this->name, 'Import', 'importFromPo', $params);
             LogUtil::registerStatus($this->__('Translation from .po-File imported'));
         }
         
