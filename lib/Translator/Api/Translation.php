@@ -51,12 +51,20 @@ class Translator_Api_Translation extends Translator_AbstractApi
         
         $joinInfo = array();
         
-        if ($mod != '') {
+        if ($mod != '' && !$countonly) {
             $joinInfo[] = array(
                 'join_method'       => 'INNER JOIN',
                 'join_table'        => 'translator_modtrans',
                 'join_field'        => array('transmod_id'),
                 'object_field_name' => array('transmod_id'),
+                'join_where'        => " tbl.trans_id=a.trans_id and a.mod_id='$mod' ",
+            );
+        } elseif ($mod != '' && $countonly) {
+            $joinInfo[] = array(
+                'join_method'       => 'INNER JOIN',
+                'join_table'        => 'translator_modtrans',
+                'join_field'        => array(),
+                'object_field_name' => array(),
                 'join_where'        => " tbl.trans_id=a.trans_id and a.mod_id='$mod' ",
             );
         }
