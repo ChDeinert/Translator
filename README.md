@@ -28,7 +28,7 @@ A *[Zikula Application Framework](http://www.zikula.org)* Module Providing a Web
 3. Initialize the **LDAPAuth** module in the _Zikula_ Adminstration area
 
 ### via Download
-1. Download the module [here](https://github.com/ChDeinert/Translator/archive/v1.0.2.zip) and extract the contents into a folder called **Translator**
+1. Download the module [here](https://github.com/ChDeinert/Translator/archive/v1.0.3.zip) and extract the contents into a folder called **Translator**
 2. Copy or move the folder into the module path of your _Zikula_ installation directory
 3. Initialize the **Translator** module in the _Zikula_ Administration area
 
