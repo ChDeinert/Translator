@@ -1,3 +1,1 @@
-[submodule "lib/vendor/php-mo"]
-	path = lib/vendor/php-mo
-	url = git://github.com/ChDeinert/php.mo.git
+
