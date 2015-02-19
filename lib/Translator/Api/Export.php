@@ -14,6 +14,33 @@
 class Translator_Api_Export extends Translator_AbstractApi
 {
     /**
+     * Export to a Po-File and compilation to Mo-File
+     *
+     * @param array $args
+     */
+    public function toPo(array $args)
+    {
+        $this->validator->hasValues($args, ['mod_id']);
+
+        $languages = ModUtil::apiFunc($this->name, 'Translation', 'avaiableLanguages', $args);
+
+        foreach ($languages as $lang) {
+            $this->export2Po(['mod_id' => $args['mod_id'], 'language' => $lang]);
+        }
+    }
+
+    /**
+     * Export to a Pot-File
+     *
+     * @param array $args
+     */
+    public function toPot(array $args)
+    {
+        $this->validator->hasValues($args, ['mod_id']);
+        $this->export2Pot($args);
+    }
+
+    /**
      * Export the Translationstrings into an .pot file.
      *
      * Parameters passed in the $args array:
@@ -27,7 +54,7 @@ class Translator_Api_Export extends Translator_AbstractApi
     public function export2Pot($args)
     {
         $this->validator->hasValues($args, ['mod_id']);
-        
+
         $modInfo = ModUtil::apiFunc('Extensions', 'admin', 'modify', array('id' => $args['mod_id']));
         $filecontent = '# Automatic generated POT-File.'."\r\n";
         $filecontent .= '# Copyright (C) YEAR THE PACKAGE\'S COPYRIGHT HOLDER'."\r\n";
@@ -52,7 +79,7 @@ class Translator_Api_Export extends Translator_AbstractApi
             ' mod_id='.$args['mod_id'].' and in_use=1',
             'trans_id'
         );
-        
+
         foreach ($modtransArray as $modtrans) {
             $occurrences = DBUtil::selectExpandedObjectArray(
                 'translator_translations_occurrences',
@@ -60,11 +87,11 @@ class Translator_Api_Export extends Translator_AbstractApi
                 ' transmod_id='.$modtrans['transmod_id'],
                 'file'
             );
-            
+
             foreach ($occurrences as $occurrence) {
                 $filecontent .= '#: '.$occurrence['file'].':'.$occurrence['line']."\r\n";
             }
-            
+
             $sourcetrans = DBUtil::selectExpandedObjectByID(
                 'translator_translations',
                 array(),
@@ -74,25 +101,25 @@ class Translator_Api_Export extends Translator_AbstractApi
             $filecontent .= 'msgid "'.$sourcetrans['sourcestring'].'"'."\r\n";
             $filecontent .= 'msgstr ""'."\r\n\r\n";
         }
-        
+
         $modulepath = 'modules/'.$modInfo['directory'];
-        
+
         if (!file_exists($modulepath.'/locale') || !is_dir($modulepath.'/locale')) {
             mkdir($modulepath.'/locale');
         }
-        
+
         $modname_lc = mb_strtolower($modInfo['name']);
         $file = fopen($modulepath.'/locale/module_'.$modname_lc.'.pot', 'w');
         fwrite($file, $filecontent);
         fclose($file);
-        
+
         if (file_exists($modulepath.'/locale/module_'.$modname_lc.'.pot')) {
             LogUtil::registerStatus($this->__f('Created .pot-File for module %s', $modInfo['displayname']));
         } else {
             LogUtil::registerError($this->__f('Error while creating .pot-File for module %s', $modInfo['displayname']));
         }
     }
-    
+
     /**
      * Export the Translations into an .po file.
      *
@@ -108,7 +135,7 @@ class Translator_Api_Export extends Translator_AbstractApi
     public function export2Po($args)
     {
         $this->validator->hasValues($args, ['mod_id', 'language']);
-        
+
         $modInfo = ModUtil::apiFunc('Extensions', 'admin', 'modify', array('id' => $args['mod_id']));
         $filecontent = '# Automatic generated POT-File.'."\r\n";
         $filecontent .= '# Copyright (C) YEAR THE PACKAGE\'S COPYRIGHT HOLDER'."\r\n";
@@ -133,7 +160,7 @@ class Translator_Api_Export extends Translator_AbstractApi
             ' mod_id='.$args['mod_id'].' and in_use=1',
             'trans_id'
         );
-        
+
         foreach ($modtransArray as $modtrans) {
             $occurrences = DBUtil::selectExpandedObjectArray(
                 'translator_translations_occurrences',
@@ -141,11 +168,11 @@ class Translator_Api_Export extends Translator_AbstractApi
                 ' transmod_id='.$modtrans['transmod_id'],
                 'file'
             );
-            
+
             foreach ($occurrences as $occurrence) {
                 $filecontent .= '#: '.$occurrence['file'].':'.$occurrence['line']."\r\n";
             }
-            
+
             $sourcetrans = DBUtil::selectExpandedObjectByID(
                 'translator_translations',
                 array(),
@@ -160,35 +187,35 @@ class Translator_Api_Export extends Translator_AbstractApi
                 array(),
                 " trans_id=".$modtrans['trans_id']." and `language`='".$args['language']."' "
             );
-            
+
             if ($targettrans == false) {
                 $targetstring = $sourcetrans['sourcestring'];
             } else {
                 $targetstring = $targettrans['targetstring'];
             }
-            
+
             $filecontent .= 'msgstr "'.str_replace("####", "'", str_replace("++++", "\\", $targetstring)).'"'."\r\n\r\n";
         }
-        
+
         $modulepath = 'modules/'.$modInfo['directory'];
-        
+
         if (!file_exists($modulepath.'/locale') || !is_dir($modulepath.'/locale')) {
             mkdir($modulepath.'/locale');
         }
-        
+
         if (
             !file_exists($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES')
             || !is_dir($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES')
         ) {
-            
+
             mkdir($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES', 0777, true);
         }
-        
+
         $modname_lc = mb_strtolower($modInfo['name']);
         $file = fopen($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES/module_'.$modname_lc.'.po', 'w');
         fwrite($file, $filecontent);
         fclose($file);
-        
+
         if (file_exists($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES/module_'.$modname_lc.'.po')) {
             LogUtil::registerStatus($this->__f('Created .po-File for module %s', $modInfo['displayname']));
             $this->compilePo2Mo(
@@ -199,7 +226,7 @@ class Translator_Api_Export extends Translator_AbstractApi
             LogUtil::registerError($this->__f('Error while creating .po-File for module %s', $modInfo['displayname']));
         }
     }
-    
+
     /**
      * Compile the .po file into a .mo file
      *
@@ -213,16 +240,16 @@ class Translator_Api_Export extends Translator_AbstractApi
         if (empty($file) || !file_exists($file)) {
             throw new Zikula_Exception_Fatal();
         }
-        
+
         require_once 'modules/Translator/lib/vendor/php-mo/php-mo.php';
-        
+
         if (phpmo_convert($file)) {
             LogUtil::registerStatus($this->__f('Compiled .po- to .mo-File for module %s', $moddesc));
         } else {
             LogUtil::registerError($this->__f('Error while compiling .po- to .mo-File for module %s', $moddesc));
         }
     }
-    
+
     /**
      * Post initialise: called from constructor
      *

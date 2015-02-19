@@ -1,4 +1,4 @@
-{ajaxheader modname=$modinfo.name filename='mcspool.js' ui=true}
+{ajaxheader modname=$modinfo.name filename='translator.js' ui=true}
 {strip}
 {insert name='csrftoken' assign='csrftoken'}
 {pageaddvarblock}

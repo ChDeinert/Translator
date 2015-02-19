@@ -1,3 +1,15 @@
+h2 small {
+    color: #888888;
+}
+
+small small {
+    color: #aaaaaa;
+}
+
+small small small {
+	color: #999999;
+}
+
 .translator-progress-bar {
     height: 25px;
     padding: 5px;
@@ -43,4 +55,14 @@
     0% {opacity: 0; width: 0;}
     50% {opacity: .5;}
     100% {opacity: 0; width: 95%;}
+}
+
+.translator-icon-play {
+    background: url("/images/icons/extrasmall/1rightarrow.png") no-repeat scroll 0 50% transparent;
+    padding: 2px 0 2px 26px;
+}
+
+.translator-icon-back {
+    background: url("/modules/Translator/images/icons/16x16/edit-undo-8.png") no-repeat scroll 0 50% transparent;
+    padding: 2px 0 2px 20px;
 }

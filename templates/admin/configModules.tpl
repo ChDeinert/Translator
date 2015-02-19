@@ -1,4 +1,4 @@
-{ajaxheader modname=$modinfo.name filename='mcspool.js' ui=true}
+{ajaxheader modname=$modinfo.name filename='translator.js' ui=true}
 {strip}
 {insert name='csrftoken' assign='csrftoken'}
 {pageaddvarblock}
@@ -40,7 +40,7 @@
             {/foreach}
         </tbody>
     </table>
-    
+
     <div class="z-buttonrow z-buttons z-center">
         {button id=configForm|cat:'_submit' type='submit' src='button_ok.png' class='z-btgreen' set='icons/extrasmall' __alt='Save' __title='Save' __text='Save'}
         <a href="{modurl modname='Translator' type='admin' func='configModules'}" class="z-btred">{img modname='core' src='button_cancel.png' set='icons/extrasmall' __alt='Cancel' __title='Cancel'} {gt text='Cancel'}</a>

@@ -1,4 +1,4 @@
-{ajaxheader modname=$modinfo.name filename='mcspool.js' ui=true}
+{ajaxheader modname=$modinfo.name filename='translator.js' ui=true}
 {strip}
 {insert name='csrftoken' assign='csrftoken'}
 {pageaddvarblock}
@@ -30,14 +30,14 @@
             </li>
         {/foreach}
     </ul>
-    
+
     <form class="z-form" id="configForm" method="get" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="module" value="Translator"/>
         <input type="hidden" name="type" value="admin"/>
         <input type="hidden" name="func" value="edit"/>
         <input type="hidden" name="sort" value="{$sort}"/>
         <input type="hidden" name="sortdir" value="{$sortdir}"/>
-        
+
         <ul class="z-menulinks">
             <li>
                 {gt text='Items per page'}:
@@ -73,7 +73,7 @@
     <input type="hidden" name="itemsperpage" value="{$itemsperpage}"/>
     <input type="hidden" name="startnum" value="{$startnum}"/>
     <input type="hidden" name="mod" value="{$mod}"/>
-    
+
     <table class="z-datatable">
         <thead>
             <tr>
@@ -107,7 +107,7 @@
             {/foreach}
         </tbody>
     </table>
-    
+
     <div class="z-buttonrow z-buttons z-center">
         {button id=translationForm|cat:'_submit' type='submit' src='button_ok.png' class='z-btgreen' set='icons/extrasmall' __alt='Save' __title='Save' __text='Save'}
         <a href="{modurl modname='Translator' type='admin' func='edit'}" class="z-btred">{img modname='core' src='button_cancel.png' set='icons/extrasmall' __alt='Cancel' __title='Cancel'} {gt text='Cancel'}</a>
