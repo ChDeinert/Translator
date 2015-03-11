@@ -28,24 +28,26 @@ class Translator_Api_Import extends Translator_AbstractApi
     public function importFromPot($args)
     {
         $this->validator->hasValues($args, ['mod_id', 'file']);
-        
+
         if (file_exists($args['file'])) {
             $translations = array();
             $filehandler = fopen($args['file'], 'r');
             $msgid = "";
             $id = false;
             $occurrences = array();
-            
+
             while (($line = fgets($filehandler)) !== false) {
                 if (substr($line, 0, 2) == '#:') {
                     $occurrence = substr($line, 2);
-                    
+
                     // Remove whitespace and new line characters.
                     $occurrence = trim($occurrence);
+
                     if (substr_count($occurrence, ':') > 1) {
                         // Example:
                         // lib/EventManager/Util.php:382 templates/Admin/FilterUsers.tpl:6
                         $occurrence = preg_split('#:|(\d+)#', $occurrence, -1,  PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+
                         for ($i = 0; $i < count($occurrence) / 2; $i++) {
                             $occurrences[] = array(
                                 'file' => $occurrence[$i * 2],
@@ -62,7 +64,6 @@ class Translator_Api_Import extends Translator_AbstractApi
                         );
                     }
                 }
-                
                 if (substr($line, 0, 5) == 'msgid') {
                     $id = true;
                     $msgid = substr(trim($line), 7, -1);
@@ -70,36 +71,34 @@ class Translator_Api_Import extends Translator_AbstractApi
                 } elseif ($id && substr($line, 0, 6) != 'msgstr') {
                     $msgid .= substr(trim($line), 1, -1);
                 }
-                
                 if (substr($line, 0, 6) == 'msgstr') {
                     $id = false;
                 }
-                
                 if (trim($line) == '') {
                     if ($msgid != '') {
                         $translations[] = array(
                             'occurrences' => $occurrences,
-                            'msgid' => $msgid,
+                            'msgid'       => $msgid,
                         );
                     }
-                    
+
                     $msgid = "";
                     $id = false;
                     $occurrences = array();
                 }
             }
-            
+
             fclose($filehandler);
             $this->savePotStrings($args['mod_id'], $translations);
-            
+
             return true;
         } else {
             LogUtil::registerError($this->__('Could not fild pot-File'));
-            
+
             return false;
         }
     }
-    
+
     /**
      * Imports msgids and msgstrs from a .po file.
      *
@@ -117,7 +116,7 @@ class Translator_Api_Import extends Translator_AbstractApi
     public function importFromPo($args)
     {
         $this->validator->hasValues($args, ['mod_id', 'file', 'language']);
-        
+
         if (file_exists($args['file'])) {
             $translations = array();
             $filehandler = fopen($args['file'], 'r');
@@ -126,16 +125,19 @@ class Translator_Api_Import extends Translator_AbstractApi
             $msgstr = "";
             $str = false;
             $occurrences = array();
-            
+
             while (($line = fgets($filehandler)) !== false) {
                 if (substr($line, 0, 2) == '#:') {
                     $occurrence = substr($line, 2);
+
                     // Remove whitespace and new line characters.
                     $occurrence = trim($occurrence);
+
                     if (substr_count($occurrence, ':') > 1) {
                         // Example:
                         // lib/EventManager/Util.php:382 templates/Admin/FilterUsers.tpl:6
                         $occurrence = preg_split('#:|(\d+)#', $occurrence, -1,  PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+
                         for ($i = 0; $i < count($occurrence) / 2; $i++) {
                             $occurrences[] = array(
                                 'file' => $occurrence[$i * 2],
@@ -152,7 +154,6 @@ class Translator_Api_Import extends Translator_AbstractApi
                         );
                     }
                 }
-                
                 if (substr($line, 0, 5) == 'msgid') {
                     $id = true;
                     $msgid = substr(trim($line), 7, -1);
@@ -160,7 +161,6 @@ class Translator_Api_Import extends Translator_AbstractApi
                 } elseif ($id && substr($line, 0, 6) != 'msgstr') {
                     $msgid .= substr(trim($line), 1, -1);
                 }
-                
                 if (substr($line, 0, 6) == 'msgstr') {
                     $id = false;
                     $msgstr = substr(trim($line), 8, -1);
@@ -168,16 +168,15 @@ class Translator_Api_Import extends Translator_AbstractApi
                 } elseif ($str && trim($line) !== '') {
                     $msgstr .= substr(trim($line), 1, -1);
                 }
-                
                 if (trim($line) == '') {
                     if ($msgid != '') {
                         $translations[] = array(
                             'occurrences' => $occurrences,
-                            'msgid' => $msgid,
-                            'msgstr' => $msgstr,
+                            'msgid'       => $msgid,
+                            'msgstr'      => $msgstr,
                         );
                     }
-                    
+
                     $msgid = "";
                     $id = false;
                     $msgstr = "";
@@ -185,19 +184,19 @@ class Translator_Api_Import extends Translator_AbstractApi
                     $occurrences = array();
                 }
             }
-            
+
             fclose($filehandler);
-            
+
             $this->savePoStrings($args['mod_id'], $args['language'], $translations);
-            
+
             return true;
         } else {
             LogUtil::registerError($this->__('Could not fild pot-File'));
-            
+
             return false;
         }
     }
-    
+
     /**
      * Writes msgids into the Database.
      *
@@ -211,14 +210,14 @@ class Translator_Api_Import extends Translator_AbstractApi
         if (!isset($mod_id) || !isset($translations) || !is_array($translations)) {
             throw new Zikula_Exception_Fatal();
         }
-        
+
         foreach ($translations as $translation) {
             $transObj = DBUtil::selectExpandedObject(
                 'translator_translations',
                 array(),
                 " sourcestring='".str_replace("'", "####", str_replace("\\", "++++", $translation['msgid']))."'"
             );
-            
+
             if (empty($transObj)) {
                 $newObj = array(
                     'sourcestring' => str_replace("'", "####", str_replace("\\", "++++",$translation['msgid'])),
@@ -228,32 +227,32 @@ class Translator_Api_Import extends Translator_AbstractApi
             } else {
                 $trans_id = $transObj['trans_id'];
             }
-            
+
             $modtransObj = DBUtil::selectExpandedObject(
                 'translator_modtrans',
                 array(),
                 ' mod_id='.$mod_id.' and trans_id='.$trans_id
             );
-            
+
             if (empty($modtransObj)) {
                 $newObj = array(
                     'trans_id' => $trans_id,
-                    'mod_id' => $mod_id,
-                    'in_use' => 1,
+                    'mod_id'   => $mod_id,
+                    'in_use'   => 1,
                 );
                 $newObj = DBUtil::insertObject($newObj, 'translator_modtrans', 'transmod_id');
                 $transmod_id = $newObj['transmod_id'];
             } else {
                 $transmod_id = $modtransObj['transmod_id'];
             }
-            
+
             foreach ($translation['occurrences'] as $occurrence) {
                 $occObj = DBUtil::selectExpandedObject(
                     'translator_translations_occurrences',
                     array(),
                     "transmod_id=$transmod_id and file='".$occurrence['file']."' and line=".$occurrence['line']
                 );
-                
+
                 if (empty($occObj)) {
                     DBUtil::executeSQL("insert into translator_translations_occurrences values ".
                         "($transmod_id, '".$occurrence['file']."', ".$occurrence['line'].")");
@@ -261,7 +260,7 @@ class Translator_Api_Import extends Translator_AbstractApi
             }
         }
     }
-    
+
     /**
      * Writes msgids and msgstrs into the Database.
      *
@@ -276,14 +275,14 @@ class Translator_Api_Import extends Translator_AbstractApi
         if (!isset($mod_id) || !isset($language) || !isset($translations) || !is_array($translations)) {
             throw new Zikula_Exception_Fatal();
         }
-        
+
         foreach ($translations as $translation) {
             $transObj = DBUtil::selectExpandedObject(
                 'translator_translations',
                 array(),
                 " sourcestring='".str_replace("'", "####", str_replace("\\", "++++",$translation['msgid']))."'"
             );
-            
+
             if (empty($transObj)) {
                 $newObj = array(
                     'sourcestring' => str_replace("'", "####", str_replace("\\", "++++",$translation['msgid'])),
@@ -293,40 +292,40 @@ class Translator_Api_Import extends Translator_AbstractApi
             } else {
                 $trans_id = $transObj['trans_id'];
             }
-            
+
             $langObj = DBUtil::selectExpandedObject(
                 'translator_translations_lang',
                 array(),
                 " trans_id=".$trans_id." and `language`='".$language."' "
             );
-            
+
             if (empty($langObj)) {
                 $newObj = array(
-                    'trans_id' => $trans_id,
-                    'language' => $language,
+                    'trans_id'     => $trans_id,
+                    'language'     => $language,
                     'targetstring' => str_replace("'", "####", str_replace("\\", "++++",$translation['msgstr'])),
                 );
                 $newObj = DBUtil::insertObject($newObj, 'translator_translations_lang', 'lang_id');
             }
-            
+
             $modtransObj = DBUtil::selectExpandedObject(
                 'translator_modtrans',
                 array(),
                 ' mod_id='.$mod_id.' and trans_id='.$trans_id
             );
-            
+
             if (empty($modtransObj)) {
                 $newObj = array(
                     'trans_id' => $trans_id,
-                    'mod_id' => $mod_id,
-                    'in_use' => 1,
+                    'mod_id'   => $mod_id,
+                    'in_use'   => 1,
                 );
                 $newObj = DBUtil::insertObject($newObj, 'translator_modtrans', 'transmod_id');
                 $transmod_id = $newObj['transmod_id'];
             } else {
                 $transmod_id = $modtransObj['transmod_id'];
             }
-            
+
             foreach ($translation['occurrences'] as $occurrence) {
                 $occObj = DBUtil::selectExpandedObject(
                     'translator_translations_occurrences',
@@ -341,7 +340,7 @@ class Translator_Api_Import extends Translator_AbstractApi
             }
         }
     }
-    
+
     /**
      * Post initialise: called from constructor
      *

@@ -24,7 +24,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
     {
         $this->redirect(ModUtil::url($this->name, 'admin', 'view'));
     }
-    
+
     /**
      * View all Gettext msgid's available in the Translator Module.
      *
@@ -61,25 +61,25 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         // Get parameters from whatever input we need.
         $params = array(
-            'searchfor' => null,
-            'searchby' => 'sourcestring',
-            'startnum' => null,
+            'searchfor'    => null,
+            'searchby'     => 'sourcestring',
+            'startnum'     => null,
             'itemsperpage' => $this->getVar('itemsperpage', 50),
-            'sort' => 'trans_id',
-            'sortdir' => 'asc',
-            'mod' => null,
+            'sort'         => 'trans_id',
+            'sortdir'      => 'asc',
+            'mod'          => null,
         );
         $this->getGet($params);
-        
+
         $items = ModUtil::apiFunc($this->name, 'Translation', 'getAll', $params);
         $count = ModUtil::apiFunc($this->name, 'Translation', 'countAll', $params);
-        
+
         // Assign parameters to the view and return it.
         $this->assign2View($params);
-        
+
         return $this->view
             ->assign('translationLanguages', $this->getVar('translationLanguages'))
             ->assign('items', $items)
@@ -88,7 +88,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
             ->assign('awl_modules', ModUtil::apiFunc($this->name, 'admin', 'getModules'))
             ->fetch('admin/view.tpl');
     }
-    
+
     /**
      * Edit all Gettext msgids' msgstr available in the Translator Module for each configured language.
      *
@@ -125,25 +125,25 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         // Get parameters from whatever input we need.
         $params = array(
-            'searchfor' => null,
-            'searchby' => 'sourcestring',
-            'startnum' => null,
+            'searchfor'    => null,
+            'searchby'     => 'sourcestring',
+            'startnum'     => null,
             'itemsperpage' => $this->getVar('itemsperpage', 20),
-            'sort' => 'trans_id',
-            'sortdir' => 'asc',
-            'mod' => null,
+            'sort'         => 'trans_id',
+            'sortdir'      => 'asc',
+            'mod'          => null,
         );
         $this->getGet($params);
-        
+
         $items = ModUtil::apiFunc($this->name, 'Translation', 'getAll', $params);
         $count = ModUtil::apiFunc($this->name, 'Translation', 'countAll', $params);
-        
+
         // Assign parameters to the view and return it.
         $this->assign2View($params);
-        
+
         return $this->view
             ->assign('translationLanguages', $this->getVar('translationLanguages'))
             ->assign('items', $items)
@@ -152,7 +152,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
             ->assign('awl_modules', ModUtil::apiFunc($this->name, 'admin', 'getModules'))
             ->fetch('admin/edit.tpl');
     }
-    
+
     /**
      * Processes the update process.
      *
@@ -181,49 +181,49 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         if ($this->request->isPost()) {
             // Get parameters from whatever input we need.
             $params = array(
-                'searchfor' => null,
-                'searchby' => 'sourcestring',
-                'startnum' => null,
+                'searchfor'    => null,
+                'searchby'     => 'sourcestring',
+                'startnum'     => null,
                 'itemsperpage' => $this->getVar('itemsperpage', 20),
-                'sort' => 'trans_id',
-                'sortdir' => 'asc',
-                'mod' => null,
+                'sort'         => 'trans_id',
+                'sortdir'      => 'asc',
+                'mod'          => null,
             );
             $this->getPost($params);
-            
+
             $translationLanguages = $this->getVar('translationLanguages');
-            
+
             if (!empty($translationLanguages)) {
                 foreach ($translationLanguages as $translang) {
                     $toupdate = $this->request->request->get('upd_targetstring_'.$translang, null);
-                    
+
                     if (is_array($toupdate) && !empty($toupdate)) {
                         foreach ($toupdate as $upd_set) {
                             $upd_set = explode('||', $upd_set);
                             $targetstring = $this->request->request->get('targetstring_'.$upd_set[0].'_'.$upd_set[1], null);
-                            
+
                             if ($targetstring !== null) {
                                 ModUtil::apiFunc($this->name, 'Translation', 'save', array(
-                                    'trans_id' => $upd_set[0],
-                                    'language' => $upd_set[1],
+                                    'trans_id'     => $upd_set[0],
+                                    'language'     => $upd_set[1],
                                     'targetstring' => $targetstring,
                                 ));
                             }
                         }
-                        
+
                         LogUtil::registerStatus($this->__('Translations saved'));
                     }
                 }
             }
         }
-        
+
         $this->redirect(ModUtil::url($this->name, 'admin', 'edit', $params));
     }
-    
+
     /**
      * View all possible export options.
      *
@@ -241,21 +241,21 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         $translatorModules = $this->getVar('translatorModules');
         $modules = array();
-        
+
         if (is_array($translatorModules)) {
             foreach ($translatorModules as $key => $val) {
                 $modInfo = ModUtil::apiFunc('Extensions', 'admin', 'modify', array('id' => $val));
-                
+
                 $modules[] = array(
-                    'mod_id' => $val,
+                    'mod_id'  => $val,
                     'moddesc' => $modInfo['displayname'],
                 );
             }
         }
-        
+
         $translationLanguages = $this->getVar('translationLanguages', array());
 
         return $this->view
@@ -264,7 +264,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
             ->assign('links', ModUtil::apiFunc($this->name, 'Admin', 'getSecondaryLinks'))
             ->fetch('admin/exportTranslations.tpl');
     }
-    
+
     /**
      * Processes the export to a .pot file.
      *
@@ -283,16 +283,16 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         $params = array('mod_id' => null);
         $this->getGet($params);
         $this->validator->checkNotNull($params, array('mod_id'));
-        
+
         ModUtil::apiFunc($this->name, 'Export', 'export2Pot', $params);
-        
+
         $this->redirect(ModUtil::url($this->name, 'admin', 'exportTranslations'));
     }
-    
+
     /**
      * Processes the Export to a .po file.
      *
@@ -312,27 +312,30 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         $params = array(
-            'mod_id' => null,
+            'mod_id'   => null,
             'language' => null,
         );
         $this->getGet($params);
         $this->validator->checkNotNull($params, array('mod_id'));
-        
+
         if ($params['language'] == null) {
             $translationLanguages = $this->getVar('translationLanguages');
-            
+
             foreach ($translationLanguages as $lang) {
-                ModUtil::apiFunc($this->name, 'Export', 'export2po', array('mod_id' => $params['mod_id'], 'language' => $lang));
+                ModUtil::apiFunc($this->name, 'Export', 'export2po', array(
+                    'mod_id'   => $params['mod_id'],
+                    'language' => $lang,
+                ));
             }
         } else {
             ModUtil::apiFunc($this->name, 'Export', 'export2po', $params);
         }
-        
+
         $this->redirect(ModUtil::url($this->name, 'admin', 'exportTranslations'));
     }
-    
+
     /**
      * Starts the search and import of new Strings to translate.
      *
@@ -348,14 +351,14 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         $items = ModUtil::apiFunc($this->name, 'admin', 'getModules');
-        
+
         return $this->view
             ->assign('items', json_encode($items))
             ->fetch('admin/addNewTranslations.tpl');
     }
-    
+
     /**
      * View all possible import options.
      *
@@ -372,49 +375,49 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         $availableModules = ModUtil::apiFunc('Extensions', 'Admin', 'listmodules', array('state' => ModUtil::STATE_ACTIVE));
         $translationLanguages = $this->getVar('translationLanguages');
         $importmodules = array();
-        
+
         foreach ($availableModules as $module) {
             $modulepath = 'modules/'.$module['directory'];
             $modname_lc = mb_strtolower($module['name']);
             $tmparray = array();
-            
+
             if (file_exists($modulepath.'/locale/module_'.$modname_lc.'.pot')) {
                 $tmparray[] = array(
-                    'file' => $modulepath.'/locale/module_'.$modname_lc.'.pot',
+                    'file'     => $modulepath.'/locale/module_'.$modname_lc.'.pot',
                     'language' => '',
-                    'type' => 'pot',
+                    'type'     => 'pot',
                 );
             }
-            
+
             foreach ($translationLanguages as $language) {
                 if (file_exists($modulepath.'/locale/'.$language.'/LC_MESSAGES/module_'.$modname_lc.'.po')) {
                     $tmparray[] = array(
-                        'file' => $modulepath.'/locale/'.$language.'/LC_MESSAGES/module_'.$modname_lc.'.po',
+                        'file'     => $modulepath.'/locale/'.$language.'/LC_MESSAGES/module_'.$modname_lc.'.po',
                         'language' => $language,
-                        'type' => 'po',
+                        'type'     => 'po',
                     );
                 }
             }
-            
+
             if (count($tmparray) > 0) {
                 $importmodules[] = array(
-                    'mod_id' => $module['id'],
+                    'mod_id'  => $module['id'],
                     'moddesc' => $module['displayname'],
-                    'files' => $tmparray,
+                    'files'   => $tmparray,
                 );
             }
         }
-        
+
         return $this->view
             ->assign('importmodules', $importmodules)
             ->assign('links', ModUtil::apiFunc($this->name, 'Admin', 'getSecondaryLinks'))
             ->fetch('admin/importTranslations.tpl');
     }
-    
+
     /**
      * Processes the import procedure.
      *
@@ -436,16 +439,16 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         $params = array(
-            'mod_id' => null,
-            'file' => null,
+            'mod_id'   => null,
+            'file'     => null,
             'filetype' => null,
             'language' => null,
         );
         $this->getGet($params);
         $this->validator->checkNotNull($params, array('mod_id', 'file', 'filetype'));
-        
+
         if ($params['filetype'] == 'pot') {
             ModUtil::apiFunc($this->name, 'Import', 'importFromPot', $params);
             LogUtil::registerStatus($this->__('Sourcestrings from .pot-File imported'));
@@ -453,10 +456,10 @@ class Translator_Controller_Admin extends Translator_AbstractController
             ModUtil::apiFunc($this->name, 'Import', 'importFromPo', $params);
             LogUtil::registerStatus($this->__('Translation from .po-File imported'));
         }
-        
+
         $this->redirect(ModUtil::url($this->name, 'admin', 'importTranslations'));
     }
-    
+
     /**
      * Configuration of the Modules to translate.
      *
@@ -472,29 +475,29 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         $availableModules = ModUtil::apiFunc('Extensions', 'Admin', 'listmodules', array('state' => ModUtil::STATE_ACTIVE));
         $modulesVar = $this->getVar('translatorModules');
-        
+
         if (!is_array($modulesVar)) {
             $modulesVar = array();
         }
-        
+
         foreach ($availableModules as $key => $val) {
             $tmpkey = array_search($val['id'], $modulesVar);
-            
+
             if ($tmpkey !== false) {
                 $availableModules[$key]['active'] = true;
             } else {
                 $availableModules[$key]['active'] = false;
             }
         }
-        
+
         return $this->view
             ->assign('availableModules', $availableModules)
             ->fetch('admin/configModules.tpl');
     }
-    
+
     /**
      * Processes the changes on the Module configuration.
      *
@@ -512,21 +515,21 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         if ($this->request->isPost()) {
             $modules = $this->request->request->get('modules', null);
-            
+
             if (!empty($modules) && is_array($modules)) {
                 $this->delVar('translatorModules');
                 $this->setVar('translatorModules', $modules);
             }
-            
+
             LogUtil::registerStatus($this->__('Configuration successfully updated'));
         }
-        
+
         $this->redirect(ModUtil::url($this->name, 'admin', 'configModules'));
     }
-    
+
     /**
      * Configuration of the Languages to translate.
      *
@@ -542,17 +545,17 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         $translationLanguages = $this->getVar('translationLanguages');
         $allLanguages = ZLanguage::languageMap();
-        
+
         foreach ($allLanguages as $key => $val) {
             if (strlen($key) == 2) {
                 $allLanguages[$key] = array(
-                    'desc' => $val,
+                    'desc'     => $val,
                     'selected' => false,
                 );
-                
+
                 if (!empty($translationLanguages)) {
                     if (in_array($key, $translationLanguages)) {
                         $allLanguages[$key]['selected'] = true;
@@ -562,12 +565,12 @@ class Translator_Controller_Admin extends Translator_AbstractController
                 unset($allLanguages[$key]);
             }
         }
-        
+
         return $this->view
             ->assign('allLanguages', $allLanguages)
             ->fetch('admin/configLanguages.tpl');
     }
-    
+
     /**
      * Processes the changes on the Language configuration.
      *
@@ -585,19 +588,19 @@ class Translator_Controller_Admin extends Translator_AbstractController
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         if ($this->request->isPost()) {
             $translationLanguages = $this->request->request->get('translationLanguages');
-            
+
             $this->delVar('translationLanguages');
             $this->setVar('translationLanguages', $translationLanguages);
-            
+
             LogUtil::registerStatus($this->__('Configuration successfully updated'));
         }
-        
+
         $this->redirect(ModUtil::url($this->name, 'admin', 'configLanguages'));
     }
-    
+
     /**
      * Post initialise: called from constructor
      *

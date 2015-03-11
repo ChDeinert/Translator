@@ -89,8 +89,8 @@ class Translator_Api_Translation extends Translator_AbstractApi
         $this->validator->hasValues($args, ['mod_id', 'translation_language']);
 
         $this->save([
-            'language' => $args['translation_language'],
-            'trans_id' => $args['trans_id'],
+            'language'     => $args['translation_language'],
+            'trans_id'     => $args['trans_id'],
             'targetstring' => $args['trans_val'],
         ]);
     }
@@ -328,7 +328,7 @@ class Translator_Api_Translation extends Translator_AbstractApi
 
         if ($langObj != false && isset($langObj['lang_id'])) {
             $updObj = array(
-                'lang_id' => $langObj['lang_id'],
+                'lang_id'      => $langObj['lang_id'],
                 'targetstring' => str_replace("'", "####", str_replace("\\", "++",$args['targetstring'])),
             );
 
@@ -344,8 +344,8 @@ class Translator_Api_Translation extends Translator_AbstractApi
             }
         } else {
             $newObj = array(
-                'trans_id' => $args['trans_id'],
-                'language' => $args['language'],
+                'trans_id'     => $args['trans_id'],
+                'language'     => $args['language'],
                 'targetstring' => str_replace("'", "####", str_replace("\\", "++++",$args['targetstring'])),
             );
 
@@ -431,7 +431,7 @@ class Translator_Api_Translation extends Translator_AbstractApi
                     if (empty($modtransObj)) {
                         $modtransObj = array(
                             'trans_id' => $newObj['trans_id'],
-                            'mod_id' => $moduleArray['mod_id'],
+                            'mod_id'   => $moduleArray['mod_id'],
                         );
                         $modtransObj = DBUtil::insertObject($modtransObj, 'translator_modtrans', 'transmod_id');
                     }
@@ -511,8 +511,8 @@ class Translator_Api_Translation extends Translator_AbstractApi
                             foreach ($occurrences as $occurrence) {
                                 $this->translatorStrings[$occurrence][$file][$i] = array(
                                     'mod_id' => $mod_id,
-                                    'file' => $file,
-                                    'line' => $i,
+                                    'file'   => $file,
+                                    'line'   => $i,
                                 );
                             }
                         }
@@ -654,23 +654,23 @@ class Translator_Api_Translation extends Translator_AbstractApi
                         } else {
                             $insobj = array(
                                 'transmod_id' => $modcheck['transmod_id'],
-                                'file' => $msgArray['file'],
-                                'line' => $msgArray['line'],
+                                'file'        => $msgArray['file'],
+                                'line'        => $msgArray['line'],
                             );
                             $insobj = DBUtil::insertObject($insobj, 'translator_translations_occurrences', 'transocc_id');
                         }
                     } else {
                         $insobj = array(
                             'trans_id' => $translationObj['trans_id'],
-                            'mod_id' => $msgArray['mod_id'],
-                            'in_use' => 1,
+                            'mod_id'   => $msgArray['mod_id'],
+                            'in_use'   => 1,
                         );
 
                         $insobj = DBUtil::insertObject($insobj, 'translator_modtrans', 'transmod_id');
                         $insobj2 = array(
                             'transmod_id' => $insobj['transmod_id'],
-                            'file' => $msgArray['file'],
-                            'line' => $msgArray['line'],
+                            'file'        => $msgArray['file'],
+                            'line'        => $msgArray['line'],
                         );
                         $insobj2 = DBUtil::insertObject($insobj2, 'translator_translations_occurrences', 'transocc_id');
                         unset($translationArray[$transFile][$transFileLine]);

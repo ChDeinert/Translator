@@ -188,7 +188,7 @@ class Translator_Api_Export extends Translator_AbstractApi
                 " trans_id=".$modtrans['trans_id']." and `language`='".$args['language']."' "
             );
 
-            if ($targettrans == false) {
+            if ($targettrans == false || empty($targettrans) || $targettrans['targetstring'] == '') {
                 $targetstring = $sourcetrans['sourcestring'];
             } else {
                 $targetstring = $targettrans['targetstring'];

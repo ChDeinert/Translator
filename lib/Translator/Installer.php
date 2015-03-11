@@ -19,12 +19,12 @@ class Translator_Installer extends Zikula_AbstractInstaller
      */
     protected function getDefaultModVars()
     {
-        return array(
-            'itemsperpage' => 50,
+        return [
+            'itemsperpage'         => 50,
             'translationLanguages' => ZLanguage::getInstalledLanguages(),
-        );
+        ];
     }
-    
+
     /**
      * Install the Translator module.
      *
@@ -35,25 +35,22 @@ class Translator_Installer extends Zikula_AbstractInstaller
         if (!DBUtil::createTable('translator_modtrans')) {
             return false;
         }
-        
         if (!DBUtil::createTable('translator_translations')) {
             return false;
         }
-        
         if (!DBUtil::createTable('translator_translations_lang')) {
             return false;
         }
-        
         if (!DBUtil::createTable('translator_translations_occurrences')) {
             return false;
         }
-        
+
         $this->setVars($this->getDefaultModVars());
-        
+
         // Installation successful
         return true;
     }
-    
+
     /**
      * Upgrade the Translator module from an old version.
      *
@@ -65,13 +62,13 @@ class Translator_Installer extends Zikula_AbstractInstaller
         /*
         switch ($oldversion) {
             case '1.0.0':
-                
+
         }
         */
         // Update successful
         return true;
     }
-    
+
     /**
      * Delete the Translator module.
      *
@@ -82,22 +79,19 @@ class Translator_Installer extends Zikula_AbstractInstaller
         if (!DBUtil::dropTable('translator_modtrans')) {
             return false;
         }
-        
         if (!DBUtil::dropTable('translator_translations')) {
             return false;
         }
-        
         if (!DBUtil::dropTable('translator_translations_lang')) {
             return false;
         }
-        
         if (!DBUtil::dropTable('translator_translations_occurrences')) {
             return false;
         }
-        
+
         // Delete any module variables
         $this->delVars();
-        
+
         // Deletion successful
         return true;
     }
