@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-19 10:04:35+0100\n"
-"PO-Revision-Date: 2015-02-19 10:04:35+0100\n"
+"POT-Creation-Date: 2015-03-11 11:35:39+0100\n"
+"PO-Revision-Date: 2015-03-11 11:35:39+0100\n"
 "Last-Translator: \n"
 "Language-Team:  \n"
 "MIME-Version: 1.0\n"
@@ -97,6 +97,7 @@ msgstr "Für Übersetzung aktiviert"
 #: modules/Translator/templates/admin/edit.tpl:112
 #: modules/Translator/templates/user/editTranslations.tpl:70
 #: modules/Translator/templates/user/editTranslations.tpl:72
+#: modules/Translator/templates/user/editTranslations.tpl:74
 msgid "Save"
 msgstr "Speichern"
 
@@ -108,6 +109,7 @@ msgstr "Speichern"
 #: modules/Translator/templates/admin/edit.tpl:113
 #: modules/Translator/templates/user/editTranslations.tpl:71
 #: modules/Translator/templates/user/editTranslations.tpl:73
+#: modules/Translator/templates/user/editTranslations.tpl:75
 msgid "Cancel"
 msgstr "Abbruch"
 
@@ -125,6 +127,7 @@ msgstr "Sprachcode"
 #: modules/Translator/templates/admin/configLanguages.tpl:26
 #: modules/Translator/templates/user/editTranslations.tpl:26
 #: modules/Translator/templates/user/editTranslations.tpl:28
+#: modules/Translator/templates/user/editTranslations.tpl:30
 msgid "Language"
 msgstr "Sprache"
 
@@ -158,12 +161,14 @@ msgstr "Verfügbare Übersetzungen bearbeiten"
 #:  modules/Translator/lib/Translator/Api/Translation.php:235
 #: modules/Translator/lib/Translator/Api/Translation.php:235
 #: modules/Translator/lib/Translator/Api/Translation.php:326
+#: modules/Translator/lib/Translator/Api/Translation.php:343
 msgid "Could not update Translation '%s'"
 msgstr "Übersetzung '%s' konnte nicht aktualisiert werden"
 
 #:  modules/Translator/lib/Translator/Api/Translation.php:247
 #: modules/Translator/lib/Translator/Api/Translation.php:247
 #: modules/Translator/lib/Translator/Api/Translation.php:338
+#: modules/Translator/lib/Translator/Api/Translation.php:355
 msgid "Could not insert Translation '%s'"
 msgstr "Übersetzung '%s' konnte nicht hinzugefügt werden"
 
@@ -175,6 +180,8 @@ msgstr "Übersetzung '%s' konnte nicht hinzugefügt werden"
 #: modules/Translator/lib/Translator/Controller/Admin.php:540
 #: modules/Translator/lib/Translator/Controller/Admin.php:524
 #: modules/Translator/lib/Translator/Controller/Admin.php:595
+#: modules/Translator/lib/Translator/Controller/Admin.php:527
+#: modules/Translator/lib/Translator/Controller/Admin.php:598
 msgid "Configuration successfully updated"
 msgstr "Konfiguration erfolgreich aktualisiert"
 
@@ -195,6 +202,7 @@ msgstr "Ziel-String"
 #: modules/Translator/lib/Translator/Api/Admin.php:98
 #: modules/Translator/templates/admin/exportTranslations.tpl:16
 #: modules/Translator/templates/user/editTranslations.tpl:21
+#: modules/Translator/templates/user/editTranslations.tpl:23
 msgid "Export Translations"
 msgstr "Übersetzungen Exportieren"
 
@@ -251,6 +259,7 @@ msgstr "Fehler beim kompilieren der .po-Datei des Moduls %s in eine .mo-Datei"
 #: modules/Translator/templates/admin/exportTranslations.tpl:38
 #: modules/Translator/templates/admin/importTranslations.tpl:38
 #: modules/Translator/templates/user/viewModules.tpl:25
+#: modules/Translator/templates/user/viewModules.tpl:27
 msgid "Module"
 msgstr "Modul"
 
@@ -288,6 +297,8 @@ msgstr "Übersetzungen gespeichert"
 #: modules/Translator/lib/Translator/Api/Import.php:189
 #: modules/Translator/lib/Translator/Api/Import.php:97
 #: modules/Translator/lib/Translator/Api/Import.php:195
+#: modules/Translator/lib/Translator/Api/Import.php:96
+#: modules/Translator/lib/Translator/Api/Import.php:194
 msgid "Could not fild pot-File"
 msgstr "pot-Datei konnte nicht gefunden werden"
 
@@ -295,6 +306,7 @@ msgstr "pot-Datei konnte nicht gefunden werden"
 #: modules/Translator/lib/Translator/Controller/Admin.php:461
 #: modules/Translator/lib/Translator/Controller/Admin.php:458
 #: modules/Translator/lib/Translator/Controller/Admin.php:451
+#: modules/Translator/lib/Translator/Controller/Admin.php:454
 msgid "Sourcestrings from .pot-File imported"
 msgstr "Quell-Strings aus der .pot-Datei importiert"
 
@@ -302,6 +314,7 @@ msgstr "Quell-Strings aus der .pot-Datei importiert"
 #: modules/Translator/lib/Translator/Controller/Admin.php:473
 #: modules/Translator/lib/Translator/Controller/Admin.php:470
 #: modules/Translator/lib/Translator/Controller/Admin.php:454
+#: modules/Translator/lib/Translator/Controller/Admin.php:457
 msgid "Translation from .po-File imported"
 msgstr "Übersetzungen aus der .po-Datei importiert"
 
@@ -326,6 +339,7 @@ msgid "Language: "
 msgstr "Sprache:"
 
 #: modules/Translator/templates/user/editTranslations.tpl:19
+#: modules/Translator/templates/user/editTranslations.tpl:21
 msgid "Back"
 msgstr "Zurück"
 
@@ -360,6 +374,7 @@ msgstr "Vorhandene Übersetzungen"
 
 #: modules/Translator/templates/user/editTranslations.tpl:46
 #: modules/Translator/templates/user/editTranslations.tpl:48
+#: modules/Translator/templates/user/editTranslations.tpl:50
 msgid "Translated"
 msgstr "Übersetzt"
 
@@ -368,6 +383,7 @@ msgid "Select Module to Translate"
 msgstr "Modul zur Übersetzung wählen"
 
 #: modules/Translator/templates/user/viewModules.tpl:38
+#: modules/Translator/templates/user/viewModules.tpl:42
 msgid "No Modules found!"
 msgstr "Keine Module gefunden!"
 
@@ -386,16 +402,20 @@ msgstr "Übersetzung des Moduls"
 #: modules/Translator/templates/user/editTranslations.tpl:20
 #: modules/Translator/templates/user/editTranslations.tpl:62
 #: modules/Translator/templates/user/editTranslations.tpl:64
+#: modules/Translator/templates/user/editTranslations.tpl:22
+#: modules/Translator/templates/user/editTranslations.tpl:66
 msgid "Scan for untranslated Strings"
 msgstr "Suche nach nicht übersetzten Strings"
 
 #: modules/Translator/templates/user/editTranslations.tpl:45
 #: modules/Translator/templates/user/editTranslations.tpl:47
+#: modules/Translator/templates/user/editTranslations.tpl:49
 msgid "Untranslated"
 msgstr "Nicht übersetzt"
 
 #: modules/Translator/templates/user/editTranslations.tpl:60
 #: modules/Translator/templates/user/editTranslations.tpl:62
+#: modules/Translator/templates/user/editTranslations.tpl:64
 msgid "No Translations available. Please scan the module to see if there are String to translate!"
 msgstr "Keine Übersetzungen gefunden. Bitte durchsuchen Sie das Modul ob es neue Strings zum übersetzen gibt!"
 
@@ -408,6 +428,15 @@ msgid "Finishing search..."
 msgstr "Suche wird abgeschlossen..."
 
 #: modules/Translator/templates/user/editTranslations.tpl:22
+#: modules/Translator/templates/user/editTranslations.tpl:24
 msgid "Export Translation Template"
 msgstr "Übersetzungstemplate exportieren"
+
+#: modules/Translator/templates/user/viewModules.tpl:35
+msgid "System Module"
+msgstr "Systemmodul"
+
+#: modules/Translator/templates/user/viewModules.tpl:35
+msgid "Core Module"
+msgstr "Kernmodul"
 
