@@ -31,7 +31,9 @@
     <tbody>
       {foreach from=$available_modules item='module'}
         <tr class="{cycle values='z-odd,z-even'}">
-          <td class="z-center">{$module.displayname}</td>
+          <td class="z-center">
+            {$module.displayname} {if ($module.type == 3)}({gt text='System Module'}){elseif ($module.type == 4)}({gt text='Core Module'}){/if}
+          </td>
           <td><a href="{modurl modname=$modinfo.name type='User' func='editTranslations' mod_id=$module.id}" class="translator-icon-play"></a></td>
         </tr>
       {foreachelse}
