@@ -25,7 +25,7 @@ class Translator_Api_Export extends Translator_AbstractApi
         $languages = ModUtil::apiFunc($this->name, 'Translation', 'avaiableLanguages', $args);
 
         foreach ($languages as $lang) {
-            $this->export2Po(['mod_id' => $args['mod_id'], 'language' => $lang]);
+            $this->export($args['mod_id'], $lang);
         }
     }
 
@@ -37,7 +37,7 @@ class Translator_Api_Export extends Translator_AbstractApi
     public function toPot(array $args)
     {
         $this->validator->hasValues($args, ['mod_id']);
-        $this->export2Pot($args);
+        $this->export($args['mod_id']);
     }
 
     /**
@@ -47,77 +47,15 @@ class Translator_Api_Export extends Translator_AbstractApi
      * -------------------------------------
      * * int mod_id The id of the Module to create the .pot file for
      *
+     * @deprecated
+     *
      * @param array $args All arguments passed to this function
      * @throws Zikula_Exception_Fatal Thrown if the parameter 'mod_id' is not set or empty
      * @return void
      */
     public function export2Pot($args)
     {
-        $this->validator->hasValues($args, ['mod_id']);
-
-        $modInfo = ModUtil::apiFunc('Extensions', 'admin', 'modify', array('id' => $args['mod_id']));
-        $filecontent = '# Automatic generated POT-File.'."\r\n";
-        $filecontent .= '# Copyright (C) YEAR THE PACKAGE\'S COPYRIGHT HOLDER'."\r\n";
-        $filecontent .= '# This file is distributed under the same license as the PACKAGE package.'."\r\n";
-        $filecontent .= '# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.'."\r\n";
-        $filecontent .= '#'."\r\n";
-        $filecontent .= 'msgid ""'."\r\n";
-        $filecontent .= 'msgstr ""'."\r\n";
-        $filecontent .= '"Project-Id-Version: \n"'."\r\n";
-        $filecontent .= '"Report-Msgid-Bugs-To: \n"'."\r\n";
-        $filecontent .= '"POT-Creation-Date: '.date("Y-m-d H:i:sO").'\n"'."\r\n";
-        $filecontent .= '"PO-Revision-Date: '.date("Y-m-d H:i:sO").'\n"'."\r\n";
-        $filecontent .= '"Last-Translator: \n"'."\r\n";
-        $filecontent .= '"Language-Team:  \n"'."\r\n";
-        $filecontent .= '"MIME-Version: 1.0\n"'."\r\n";
-        $filecontent .= '"Content-Type: text/plain; charset=UTF-8\n"'."\r\n";
-        $filecontent .= '"Content-Transfer-Encoding: 8bit\n"'."\r\n";
-        $filecontent .= '"Language: \n"'."\r\n\r\n";
-        $modtransArray = DBUtil::selectExpandedObjectArray(
-            'translator_modtrans',
-            array(),
-            ' mod_id='.$args['mod_id'].' and in_use=1',
-            'trans_id'
-        );
-
-        foreach ($modtransArray as $modtrans) {
-            $occurrences = DBUtil::selectExpandedObjectArray(
-                'translator_translations_occurrences',
-                array(),
-                ' transmod_id='.$modtrans['transmod_id'],
-                'file'
-            );
-
-            foreach ($occurrences as $occurrence) {
-                $filecontent .= '#: '.$occurrence['file'].':'.$occurrence['line']."\r\n";
-            }
-
-            $sourcetrans = DBUtil::selectExpandedObjectByID(
-                'translator_translations',
-                array(),
-                $modtrans['trans_id'],
-                'trans_id'
-            );
-            $filecontent .= 'msgid "'.$sourcetrans['sourcestring'].'"'."\r\n";
-            $filecontent .= 'msgstr ""'."\r\n\r\n";
-        }
-
-        $modulepath = 'modules/'.$modInfo['directory'];
-
-        if (!file_exists($modulepath.'/locale') || !is_dir($modulepath.'/locale')) {
-            mkdir($modulepath.'/locale');
-        }
-
-        $modname_lc = mb_strtolower($modInfo['name']);
-        $file = fopen($modulepath.'/locale/module_'.$modname_lc.'.pot', 'w');
-        fwrite($file, $filecontent);
-        fclose($file);
-
-        if (file_exists($modulepath.'/locale/module_'.$modname_lc.'.pot')) {
-            LogUtil::registerStatus($this->__f('Created .pot-File for module %s', $modInfo['displayname']));
-        } else {
-            LogUtil::registerError($this->__f('Error while creating .pot-File for module %s', $modInfo['displayname']));
-        }
+        $this->toPot($args);
     }
 
     /**
@@ -128,103 +66,26 @@ class Translator_Api_Export extends Translator_AbstractApi
      * * int    mod_id      The id of the Module to create the .po file for
      * * string language    The language to export
      *
+     * @deprecated
+     *
      * @param array $args All arguments passed to this function
      * @throws Zikula_Exception_Fatal Thrown if the parameters 'mod_id', 'language' are not set or empty
      * @return void
      */
     public function export2Po($args)
     {
-        $this->validator->hasValues($args, ['mod_id', 'language']);
+        $this->toPo($args);
+    }
 
-        $modInfo = ModUtil::apiFunc('Extensions', 'admin', 'modify', array('id' => $args['mod_id']));
-        $filecontent = '# Automatic generated POT-File.'."\r\n";
-        $filecontent .= '# Copyright (C) YEAR THE PACKAGE\'S COPYRIGHT HOLDER'."\r\n";
-        $filecontent .= '# This file is distributed under the same license as the PACKAGE package.'."\r\n";
-        $filecontent .= '# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.'."\r\n";
-        $filecontent .= '#'."\r\n";
-        $filecontent .= 'msgid ""'."\r\n";
-        $filecontent .= 'msgstr ""'."\r\n";
-        $filecontent .= '"Project-Id-Version: \n"'."\r\n";
-        $filecontent .= '"Report-Msgid-Bugs-To: \n"'."\r\n";
-        $filecontent .= '"POT-Creation-Date: '.date("Y-m-d H:i:sO").'\n"'."\r\n";
-        $filecontent .= '"PO-Revision-Date: '.date("Y-m-d H:i:sO").'\n"'."\r\n";
-        $filecontent .= '"Last-Translator: \n"'."\r\n";
-        $filecontent .= '"Language-Team:  \n"'."\r\n";
-        $filecontent .= '"MIME-Version: 1.0\n"'."\r\n";
-        $filecontent .= '"Content-Type: text/plain; charset=UTF-8\n"'."\r\n";
-        $filecontent .= '"Content-Transfer-Encoding: 8bit\n"'."\r\n";
-        $filecontent .= '"Language: '.$args['language'].'\n"'."\r\n\r\n";
-        $modtransArray = DBUtil::selectExpandedObjectArray(
-            'translator_modtrans',
-            array(),
-            ' mod_id='.$args['mod_id'].' and in_use=1',
-            'trans_id'
-        );
-
-        foreach ($modtransArray as $modtrans) {
-            $occurrences = DBUtil::selectExpandedObjectArray(
-                'translator_translations_occurrences',
-                array(),
-                ' transmod_id='.$modtrans['transmod_id'],
-                'file'
-            );
-
-            foreach ($occurrences as $occurrence) {
-                $filecontent .= '#: '.$occurrence['file'].':'.$occurrence['line']."\r\n";
-            }
-
-            $sourcetrans = DBUtil::selectExpandedObjectByID(
-                'translator_translations',
-                array(),
-                $modtrans['trans_id'],
-                'trans_id'
-            );
-            $filecontent .= 'msgid "'.
-                str_replace("####", "'", str_replace("++++", "\\", $sourcetrans['sourcestring'])).
-                '"'."\r\n";
-            $targettrans = DBUtil::selectExpandedObject(
-                'translator_translations_lang',
-                array(),
-                " trans_id=".$modtrans['trans_id']." and `language`='".$args['language']."' "
-            );
-
-            if ($targettrans == false || empty($targettrans) || $targettrans['targetstring'] == '') {
-                $targetstring = $sourcetrans['sourcestring'];
-            } else {
-                $targetstring = $targettrans['targetstring'];
-            }
-
-            $filecontent .= 'msgstr "'.str_replace("####", "'", str_replace("++++", "\\", $targetstring)).'"'."\r\n\r\n";
-        }
-
-        $modulepath = 'modules/'.$modInfo['directory'];
-
-        if (!file_exists($modulepath.'/locale') || !is_dir($modulepath.'/locale')) {
-            mkdir($modulepath.'/locale');
-        }
-
-        if (
-            !file_exists($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES')
-            || !is_dir($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES')
-        ) {
-
-            mkdir($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES', 0777, true);
-        }
-
-        $modname_lc = mb_strtolower($modInfo['name']);
-        $file = fopen($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES/module_'.$modname_lc.'.po', 'w');
-        fwrite($file, $filecontent);
-        fclose($file);
-
-        if (file_exists($modulepath.'/locale/'.$args['language'].'/LC_MESSAGES/module_'.$modname_lc.'.po')) {
-            LogUtil::registerStatus($this->__f('Created .po-File for module %s', $modInfo['displayname']));
-            $this->compilePo2Mo(
-                $modulepath.'/locale/'.$args['language'].'/LC_MESSAGES/module_'.$modname_lc.'.po',
-                $modInfo['displayname']
-            );
-        } else {
-            LogUtil::registerError($this->__f('Error while creating .po-File for module %s', $modInfo['displayname']));
-        }
+    /**
+     * Post initialise: called from constructor
+     *
+     * @see Zikula_AbstractBase::postInitialize()
+     */
+    protected function postInitialize()
+    {
+        parent::postInitialize();
+        $this->validator = new Translator_Validator_Api();
     }
 
     /**
@@ -235,7 +96,7 @@ class Translator_Api_Export extends Translator_AbstractApi
      * @throws Zikula_Exception_Fatal Thrown if $file is empty or the file does not exist
      * @return void
      */
-    public function compilePo2Mo($file = null, $moddesc)
+    protected function compile($file = null, $moddesc)
     {
         if (empty($file) || !file_exists($file)) {
             throw new Zikula_Exception_Fatal();
@@ -251,13 +112,183 @@ class Translator_Api_Export extends Translator_AbstractApi
     }
 
     /**
-     * Post initialise: called from constructor
+     * Export of Translations to a Po or Pot File
      *
-     * @see Zikula_AbstractBase::postInitialize()
+     * The decision, whether it's an Po or Pot File depends on the language.
+     * If that is null it will be a Pot File. If it's not empty it will be a Po File with compilation to Mo.
+     *
+     * @param number $mod_id
+     * @param string $language
      */
-    protected function postInitialize()
+    protected function export($mod_id, $language = null)
     {
-        parent::postInitialize();
-        $this->validator = new Translator_Validator_Api();
+        $filecontent = $this->writeHeader($language);
+        $modtransArray = DBUtil::selectExpandedObjectArray(
+            'translator_modtrans',
+            [],
+            ' mod_id='.$mod_id.' and in_use=1',
+            'trans_id'
+        );
+
+        foreach ($modtransArray as $modtrans) {
+            $filecontent .= $this->writeOccurrences($modtrans['transmod_id']);
+            $filecontent .= $this->writeMsgID($modtrans['trans_id']);
+            $filecontent .= $this->writeMsgStr($modtrans['trans_id'], $language);
+        }
+
+        $modInfo = ModUtil::apiFunc('Extensions', 'admin', 'modify', ['id' => $mod_id]);
+        $modulepath = 'modules/'.$modInfo['directory'];
+        $this->checkPath($modulepath.'/locale');
+
+        if ($language != null) {
+            $this->checkPath($modulepath.'/locale/'.$language.'/LC_MESSAGES');
+            $filename = $modulepath.'/locale/'.$language.'/LC_MESSAGES/module_'.mb_strtolower($modInfo['name']).'.po';
+        } else {
+            $filename = $modulepath.'/locale/module_'.mb_strtolower($modInfo['name']).'.pot';
+        }
+
+        $filehandler = fopen($filename, 'w');
+        fwrite($filehandler, $filecontent);
+        fclose($filehandler);
+
+        if ($this->checkResult($filename, $modInfo, $language) && $language != null) {
+            $this->compile($filename, $modInfo['displayname']);
+        }
+    }
+
+    /**
+     * Returns the text that will be written as Header into the Po or Pot File
+     *
+     * @param string $language
+     * @return string
+     */
+    private function writeHeader($language = null)
+    {
+        $header = '# Automatic generated PO'.($language == null ? 'T' : '').'-File.'."\r\n";
+        $header .= '# Copyright (C) YEAR THE PACKAGE\'S COPYRIGHT HOLDER'."\r\n";
+        $header .= '# This file is distributed under the same license as the PACKAGE package.'."\r\n";
+        $header .= '# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.'."\r\n";
+        $header .= '#'."\r\n";
+        $header .= 'msgid ""'."\r\n";
+        $header .= 'msgstr ""'."\r\n";
+        $header .= '"Project-Id-Version: \n"'."\r\n";
+        $header .= '"Report-Msgid-Bugs-To: \n"'."\r\n";
+        $header .= '"POT-Creation-Date: '.date("Y-m-d H:i:sO").'\n"'."\r\n";
+        $header .= '"PO-Revision-Date: '.date("Y-m-d H:i:sO").'\n"'."\r\n";
+        $header .= '"Last-Translator: \n"'."\r\n";
+        $header .= '"Language-Team:  \n"'."\r\n";
+        $header .= '"MIME-Version: 1.0\n"'."\r\n";
+        $header .= '"Content-Type: text/plain; charset=UTF-8\n"'."\r\n";
+        $header .= '"Content-Transfer-Encoding: 8bit\n"'."\r\n";
+        $header .= '"Language: '.$language.'\n"'."\r\n\r\n";
+
+        return $header;;
+    }
+
+    /**
+     * Returns the Occurrences section of one Translation for writing into the File
+     *
+     * @param number $transmod_id
+     * @return string
+     */
+    private function writeOccurrences($transmod_id)
+    {
+        $occurrences = DBUtil::selectExpandedObjectArray(
+            'translator_translations_occurrences',
+            [],
+            ' transmod_id='.$transmod_id,
+            'file'
+        );
+        $occurrences_string = '';
+
+        foreach ($occurrences as $occurrence) {
+            $occurrences_string .= '#: '.$occurrence['file'].':'.$occurrence['line']."\r\n";
+        }
+
+        return $occurrences_string;
+    }
+
+    /**
+     * Returns the Sourcestring for writing into the File
+     *
+     * @param number $trans_id
+     * @return string
+     */
+    private function writeMsgID($trans_id)
+    {
+        $sourcetrans = DBUtil::selectExpandedObjectByID('translator_translations', [], $trans_id, 'trans_id');
+        $msgid_string = 'msgid "'.
+            str_replace("####", "'", str_replace("++++", "\\", $sourcetrans['sourcestring'])).
+            '"'."\r\n";
+
+        return $msgid_string;
+    }
+
+    /**
+     * Writes the translated String for writing into the File
+     *
+     * If the translated String is empty, the sourcestring will be used.
+     *
+     * @param number $trans_id
+     * @param string $language
+     * @return string
+     */
+    private function writeMsgStr($trans_id, $language = null)
+    {
+        $msgstr_string = 'msgstr "';
+
+        if ($language != null) {
+            $targettrans = DBUtil::selectExpandedObject(
+                'translator_translations_lang',
+                [],
+                " trans_id=".$trans_id." and `language`='".$language."' "
+            );
+
+            if ($targettrans == false || empty($targettrans) || $targettrans['targetstring'] == '') {
+                $sourcetrans = DBUtil::selectExpandedObjectByID('translator_translations', [], $trans_id, 'trans_id');
+                $msgstr_string .= str_replace("####", "'", str_replace("++++", "\\", $sourcetrans['sourcestring'])).'"';
+            } else {
+                $msgstr_string .= str_replace("####", "'", str_replace("++++", "\\", $targettrans['targetstring'])).'"';
+            }
+        }
+
+        $msgstr_string .= "\r\n\r\n";
+
+        return $msgstr_string;
+    }
+
+    /**
+     * Checks if a given Path is avaiable and creates it, if not
+     *
+     * @param string $path
+     */
+    private function checkPath($path)
+    {
+        if (!file_exists($path) || !is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+    }
+
+    /**
+     * Check if the file was created and writing of the Flash-Messages
+     *
+     * @param string $filename
+     * @param array $modInfo
+     * @param string $language
+     * @return boolean
+     */
+    private function checkResult($filename, $modInfo, $language = null)
+    {
+        $filetype = $language != null ? 'Po' : 'Pot';
+
+        if (file_exists($filename)) {
+            LogUtil::registerStatus($this->__f('Created %s File for module %s', [$filetype, $modInfo['displayname']]));
+
+            return true;
+        } else {
+            LogUtil::registerError($this->__f('Error while creating %s File for module %s', [$filetype, $modInfo['displayname']]));
+
+            return false;
+        }
     }
 }

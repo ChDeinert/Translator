@@ -62,7 +62,9 @@ class Translator_Installer extends Zikula_AbstractInstaller
         /*
         switch ($oldversion) {
             case '1.0.0':
-
+            case '1.0.1':
+            case '1.0.2':
+            case '1.0.3':
         }
         */
         // Update successful

@@ -1,4 +1,4 @@
-# Automatic generated POT-File.
+# Automatic generated PO-File.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-11 11:35:39+0100\n"
-"PO-Revision-Date: 2015-03-11 11:35:39+0100\n"
+"POT-Creation-Date: 2015-04-24 11:22:34+0200\n"
+"PO-Revision-Date: 2015-04-24 11:22:34+0200\n"
 "Last-Translator: \n"
 "Language-Team:  \n"
 "MIME-Version: 1.0\n"
@@ -206,43 +206,12 @@ msgstr "Ziel-String"
 msgid "Export Translations"
 msgstr "Übersetzungen Exportieren"
 
-#:  modules/Translator/lib/Translator/Api/Export.php:91
-#: modules/Translator/lib/Translator/Api/Export.php:91
-#: modules/Translator/lib/Translator/Api/Export.php:92
-#: modules/Translator/lib/Translator/Api/Export.php:110
-#: modules/Translator/lib/Translator/Api/Export.php:117
-msgid "Created .pot-File for module %s"
-msgstr ".pot-Datei für Modul %s erstellt"
-
-#:  modules/Translator/lib/Translator/Api/Export.php:93
-#: modules/Translator/lib/Translator/Api/Export.php:93
-#: modules/Translator/lib/Translator/Api/Export.php:94
-#: modules/Translator/lib/Translator/Api/Export.php:112
-#: modules/Translator/lib/Translator/Api/Export.php:119
-msgid "Error while creating .pot-File for module %s"
-msgstr "Fehler beim erstellen der .pot-Datei für das Modul %s"
-
-#:  modules/Translator/lib/Translator/Api/Export.php:195
-#: modules/Translator/lib/Translator/Api/Export.php:195
-#: modules/Translator/lib/Translator/Api/Export.php:197
-#: modules/Translator/lib/Translator/Api/Export.php:213
-#: modules/Translator/lib/Translator/Api/Export.php:220
-msgid "Created .po-File for module %s"
-msgstr ".po-Datei für Modul %s erstellt"
-
-#:  modules/Translator/lib/Translator/Api/Export.php:201
-#: modules/Translator/lib/Translator/Api/Export.php:201
-#: modules/Translator/lib/Translator/Api/Export.php:203
-#: modules/Translator/lib/Translator/Api/Export.php:219
-#: modules/Translator/lib/Translator/Api/Export.php:226
-msgid "Error while creating .po-File for module %s"
-msgstr "Fehler beim erstellen der .po-Datei für das Modul %s"
-
 #:  modules/Translator/lib/Translator/Api/Export.php:222
 #: modules/Translator/lib/Translator/Api/Export.php:222
 #: modules/Translator/lib/Translator/Api/Export.php:224
 #: modules/Translator/lib/Translator/Api/Export.php:240
 #: modules/Translator/lib/Translator/Api/Export.php:247
+#: modules/Translator/lib/Translator/Api/Export.php:108
 msgid "Compiled .po- to .mo-File for module %s"
 msgstr ".po-Datei des Moduls %s zu .mo-Datei kompiliert"
 
@@ -251,6 +220,7 @@ msgstr ".po-Datei des Moduls %s zu .mo-Datei kompiliert"
 #: modules/Translator/lib/Translator/Api/Export.php:226
 #: modules/Translator/lib/Translator/Api/Export.php:242
 #: modules/Translator/lib/Translator/Api/Export.php:249
+#: modules/Translator/lib/Translator/Api/Export.php:110
 msgid "Error while compiling .po- to .mo-File for module %s"
 msgstr "Fehler beim kompilieren der .po-Datei des Moduls %s in eine .mo-Datei"
 
@@ -420,6 +390,7 @@ msgid "No Translations available. Please scan the module to see if there are Str
 msgstr "Keine Übersetzungen gefunden. Bitte durchsuchen Sie das Modul ob es neue Strings zum übersetzen gibt!"
 
 #: modules/Translator/lib/Translator/Controller/Ajax.php:55
+#: modules/Translator/lib/Translator/Controller/Ajax.php:54
 msgid "Missing parameters!"
 msgstr "Parameter fehlen!"
 
@@ -439,4 +410,12 @@ msgstr "Systemmodul"
 #: modules/Translator/templates/user/viewModules.tpl:35
 msgid "Core Module"
 msgstr "Kernmodul"
+
+#: modules/Translator/lib/Translator/Api/Export.php:283
+msgid "Created %s File for module %s"
+msgstr "%s Datei für Modul %s erstellt"
+
+#: modules/Translator/lib/Translator/Api/Export.php:287
+msgid "Error while creating %s File for module %s"
+msgstr "Fehler beim erstellen der %s Datei für das Modul %s"
 

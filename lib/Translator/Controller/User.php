@@ -116,28 +116,17 @@ class Translator_Controller_User extends Translator_AbstractController
     public function exportTranslation()
     {
         $data = [
-            'mod_id'               => null,
-            'translation_language' => null,
+            'mod_id' => null,
+            'target' => 'po',
         ];
         $this->getGet($data);
         $this->validator->checkNotNull($data, ['mod_id']);
 
-        ModUtil::apiFunc($this->name, 'Export', 'toPo', $data);
-
-        $this->redirect(ModUtil::url($this->name, 'User', 'editTranslations', $data));
-    }
-
-    /**
-     * Exports the Translation Template
-     * Redirects back to User Controller editTranslations
-     */
-    public function exportTranslationTemplate()
-    {
-        $data = ['mod_id' => null];
-        $this->getGet($data);
-        $this->validator->checkNotNull($data, ['mod_id']);
-
-        ModUtil::apiFunc($this->name, 'Export', 'toPot', $data);
+        if (empty($data['target']) || $data['target'] == 'po') {
+            ModUtil::apiFunc($this->name, 'Export', 'toPo', $data);
+        } elseif ($data['target'] == 'pot') {
+            ModUtil::apiFunc($this->name, 'Export', 'toPot', $data);
+        }
 
         $this->redirect(ModUtil::url($this->name, 'User', 'editTranslations', $data));
     }

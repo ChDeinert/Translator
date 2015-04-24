@@ -20,8 +20,8 @@
   <ul class="z-menulinks">
     <li><a href="{modurl modname=$modinfo.name type='User' func='viewModules'}" class="translator-icon-back">{gt text='Back'}</a></li>
     <li><a href="{modurl modname=$modinfo.name type='User' func='searchTranslations' mod_id=$mod_id}" class="z-icon-es-search">{gt text='Scan for untranslated Strings'}</a></li>
-    <li><a href="{modurl modname=$modinfo.name type='User' func='exportTranslation' mod_id=$mod_id}" class="z-icon-es-export">{gt text='Export Translations'}</a></li>
-    <li><a href="{modurl modname=$modinfo.name type='User' func='exportTranslationTemplate' mod_id=$mod_id}" class="z-icon-es-export">{gt text='Export Translation Template'}</a></li>
+    <li><a href="{modurl modname=$modinfo.name type='User' func='exportTranslation' mod_id=$mod_id target='po'}" class="z-icon-es-export">{gt text='Export Translations'}</a></li>
+    <li><a href="{modurl modname=$modinfo.name type='User' func='exportTranslation' mod_id=$mod_id target='pot'}" class="z-icon-es-export">{gt text='Export Translation Template'}</a></li>
   </ul>
 </div>
 
