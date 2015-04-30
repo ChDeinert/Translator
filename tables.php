@@ -19,6 +19,23 @@ function Translator_tables()
     // Initialise table array
     $dbtable = array();
 
+    // Table containing the Translations of the Modules
+    $dbtable['translator_moduletranslations'] = 'translator_moduletranslations';
+    $dbtable['translator_moduletranslations_column'] = [
+        'id'           => 'id',
+        'module_id'    => 'module_id',
+        'sourcestring' => 'sourcestring',
+        'in_use'       => 'in_use',
+        'ignore'       => 'ignore',
+    ];
+    $dbtable['translator_moduletranslations_column_def'] = [
+        'id'           => "I UNSIGNED AUTO PRIMARY",
+        'module_id'    => "I UNSIGNED NOTNULL DEFAULT 0",
+        'sourcestring' => "X",
+        'in_use'       => "I(1) DEFAULT 1",
+        'ignore'       => "I(1) DEFAULT 0",
+    ];
+
     // Table containing Module-Translation connections
     $dbtable['translator_modtrans'] = 'translator_modtrans';
     $dbtable['translator_modtrans_column'] = [
