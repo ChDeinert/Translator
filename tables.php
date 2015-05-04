@@ -26,14 +26,14 @@ function Translator_tables()
         'module_id'    => 'module_id',
         'sourcestring' => 'sourcestring',
         'in_use'       => 'in_use',
-        'ignore'       => 'ignore',
+        'ignore_msgid' => 'ignore_msgid',
     ];
     $dbtable['translator_moduletranslations_column_def'] = [
         'id'           => "I UNSIGNED AUTO PRIMARY",
         'module_id'    => "I UNSIGNED NOTNULL DEFAULT 0",
         'sourcestring' => "X",
         'in_use'       => "I(1) DEFAULT 1",
-        'ignore'       => "I(1) DEFAULT 0",
+        'ignore_msgid' => "I(1) DEFAULT 0",
     ];
 
     // Table containing Module-Translation connections
