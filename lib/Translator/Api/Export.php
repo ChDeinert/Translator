@@ -123,17 +123,21 @@ class Translator_Api_Export extends Translator_AbstractApi
     protected function export($mod_id, $language = null)
     {
         $filecontent = $this->writeHeader($language);
-        $modtransArray = DBUtil::selectExpandedObjectArray(
+        /*$modtransArray = DBUtil::selectExpandedObjectArray(
             'translator_modtrans',
             [],
             ' mod_id='.$mod_id.' and in_use=1',
             'trans_id'
-        );
+        );*/
+        $modtransArray = DBUtil::selectExpandedObjectArray('translator_moduletranslations', [], "module_id = {$mod_id} and in_use = 1 and ignore_msgid = 0", 'id');
 
         foreach ($modtransArray as $modtrans) {
-            $filecontent .= $this->writeOccurrences($modtrans['transmod_id']);
+            /*$filecontent .= $this->writeOccurrences($modtrans['transmod_id']);
             $filecontent .= $this->writeMsgID($modtrans['trans_id']);
-            $filecontent .= $this->writeMsgStr($modtrans['trans_id'], $language);
+            $filecontent .= $this->writeMsgStr($modtrans['trans_id'], $language);*/
+            $filecontent .= $this->writeOccurrences($modtrans['id']);
+            $filecontent .= $this->writeMsgID($modtrans['id']);
+            $filecontent .= $this->writeMsgStr($modtrans['id'], $language);
         }
 
         $modInfo = ModUtil::apiFunc('Extensions', 'admin', 'modify', ['id' => $mod_id]);
@@ -216,7 +220,8 @@ class Translator_Api_Export extends Translator_AbstractApi
      */
     private function writeMsgID($trans_id)
     {
-        $sourcetrans = DBUtil::selectExpandedObjectByID('translator_translations', [], $trans_id, 'trans_id');
+        //$sourcetrans = DBUtil::selectExpandedObjectByID('translator_translations', [], $trans_id, 'trans_id');
+        $sourcetrans = DBUtil::selectExpandedObjectByID('translator_moduletranslations', [], $trans_id, 'id');
         $msgid_string = 'msgid "'.
             str_replace("####", "'", str_replace("++++", "\\", $sourcetrans['sourcestring'])).
             '"'."\r\n";
@@ -245,14 +250,15 @@ class Translator_Api_Export extends Translator_AbstractApi
             );
 
             if ($targettrans == false || empty($targettrans) || $targettrans['targetstring'] == '') {
-                $sourcetrans = DBUtil::selectExpandedObjectByID('translator_translations', [], $trans_id, 'trans_id');
+                //$sourcetrans = DBUtil::selectExpandedObjectByID('translator_translations', [], $trans_id, 'trans_id');
+                $sourcetrans = DBUtil::selectExpandedObjectByID('translator_moduletranslations', [], $trans_id, 'id');
                 $msgstr_string .= str_replace("####", "'", str_replace("++++", "\\", $sourcetrans['sourcestring'])).'"';
             } else {
                 $msgstr_string .= str_replace("####", "'", str_replace("++++", "\\", $targettrans['targetstring'])).'"';
             }
         }
 
-        $msgstr_string .= "\r\n\r\n";
+        $msgstr_string .= "\"\r\n\r\n";
 
         return $msgstr_string;
     }

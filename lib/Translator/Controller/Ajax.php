@@ -20,6 +20,7 @@ class Translator_Controller_Ajax extends Zikula_Controller_AbstractAjax
      * -----------------------------------
      * * int    mod     The ID of the module to search in
      *
+     * @deprecated
      * @return Zikula_Response_Ajax Containing an array with the msgids found in the current module
      */
     public function searchTranslations()
@@ -76,7 +77,7 @@ class Translator_Controller_Ajax extends Zikula_Controller_AbstractAjax
 
         $mod_id = $this->request->request->get('mod_id', null);
 
-        ModUtil::apiFunc($this->name, 'Translation', 'finalizeSearch', ['mod_id' => $mod_id]);
+        //ModUtil::apiFunc($this->name, 'Translation', 'finalizeSearch', ['mod_id' => $mod_id]);
 
         return new Zikula_Response_Ajax(['result' => 1]);
     }

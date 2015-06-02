@@ -95,18 +95,18 @@ class Translator_Controller_User extends Translator_AbstractController
             'translations'         => [],
         ];
         $this->getPost($data);
-        $this->validator->checkNotNull($data, ['mod_id']);
+        echo print_r($data, true);
+        $this->validator->checkNotNull($data, ['mod_id', 'translation_language']);
 
         foreach ($data['translations'] as $key => $val) {
-            ModUtil::apiFunc($this->name, 'Translation', 'update', [
-                'mod_id'               => $data['mod_id'],
-                'translation_language' => $data['translation_language'],
+            ModUtil::apiFunc($this->name, 'Translation', 'save', [
+                'language' => $data['translation_language'],
                 'trans_id'             => $key,
-                'trans_val'            => $val,
+                'targetstring'         => $val,
             ]);
         }
 
-        $this->redirect(ModUtil::url($this->name, 'User', 'editTranslations', ['mod_id' => $data['mod_id']]));
+        $this->redirect(ModUtil::url($this->name, 'User', 'editTranslations', ['mod_id' => $data['mod_id'], 'translation_language' => $data['translation_language']]));
     }
 
     /**

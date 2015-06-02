@@ -32,7 +32,7 @@ class Translator_Validator_ApiTranslation extends Translator_Validator_Api
             $args['module'] = '';
         }
     }
-    
+
     /**
      * Validates the Parameters passed to the getAll Method
      *
@@ -44,7 +44,7 @@ class Translator_Validator_ApiTranslation extends Translator_Validator_Api
     public function checkGetAllParams(array &$argsArray)
     {
         $this->checkCountAllParams($argsArray);
-        
+
         if (!isset($argsArray['startnum'])) {
             $argsArray['startnum'] = -1;
         }
@@ -58,7 +58,7 @@ class Translator_Validator_ApiTranslation extends Translator_Validator_Api
             $argsArray['sortdir'] = 'asc';
         }
     }
-    
+
     /**
      * Validates the User input for writing Translations into the database
      *
@@ -66,8 +66,9 @@ class Translator_Validator_ApiTranslation extends Translator_Validator_Api
      */
     public function checkSaveParams(array &$argsArray)
     {
+        echo '-'.print_r($argsArray, true)."<br>";
         $this->hasValues($argsArray, array('trans_id', 'language'));
-        
+
         if (!isset($args['targetstring']) || $args['targetstring'] == null) {
             $args['targetstring'] = '';
         }

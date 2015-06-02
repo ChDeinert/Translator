@@ -22,7 +22,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      */
     public function main()
     {
-        $this->redirect(ModUtil::url($this->name, 'admin', 'view'));
+        $this->redirect(ModUtil::url($this->name, 'admin', 'importTranslations'));
     }
 
     /**

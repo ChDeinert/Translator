@@ -32,21 +32,14 @@ class Translator_Api_Translation extends Translator_AbstractApi
 
         $joinInfo = [];
         $joinInfo[] = [
-            'join_method'       => 'INNER JOIN',
-            'join_table'        => 'translator_modtrans',
-            'join_field'        => ['transmod_id'],
-            'object_field_name' => ['transmod_id'],
-            'join_where'        => " tbl.trans_id=a.trans_id and a.mod_id='{$args['mod_id']}' ",
-        ];
-        $joinInfo[] = [
             'join_method'       => 'LEFT JOIN',
             'join_table'        => 'translator_translations_lang',
             'join_field'        => ['targetstring'],
             'object_field_name' => ['targetstring'],
-            'join_where'        => " tbl.trans_id = b.trans_id and language = '{$args['translation_language']}' ",
+            'join_where'        => " tbl.id = a.trans_id and language = '{$args['translation_language']}' ",
         ];
-        $where = '';
-        $items = DBUtil::selectExpandedObjectArray('translator_translations', $joinInfo, $where);
+        $where = 'module_id = '.$args['mod_id'];
+        $items = DBUtil::selectExpandedObjectArray('translator_moduletranslations', $joinInfo, $where);
 
         foreach ($items as $key => $val) {
             $items[$key]['sourcestring'] = str_replace("####", "'", str_replace("++++", "\\", $val['sourcestring']));
@@ -67,32 +60,9 @@ class Translator_Api_Translation extends Translator_AbstractApi
         $this->validator->hasValues($args, ['mod_id']);
 
         $joinInfo = [];
-        $joinInfo[] = [
-            'join_method'       => 'INNER JOIN',
-            'join_table'        => 'translator_modtrans',
-            'join_field'        => [],
-            'object_field_name' => [],
-            'join_where'        => " tbl.trans_id=a.trans_id and a.mod_id='{$args['mod_id']}' ",
-        ];
-        $where = '';
+        $where = 'module_id = '.$args['mod_id'];
 
-        return DBUtil::selectExpandedObjectCount('translator_translations', $joinInfo, $where);
-    }
-
-    /**
-     * Updates a Translation
-     *
-     * @param array $args
-     */
-    public function update(array $args)
-    {
-        $this->validator->hasValues($args, ['mod_id', 'translation_language']);
-
-        $this->save([
-            'language'     => $args['translation_language'],
-            'trans_id'     => $args['trans_id'],
-            'targetstring' => $args['trans_val'],
-        ]);
+        return DBUtil::selectExpandedObjectCount('translator_moduletranslations', $joinInfo, $where);
     }
 
     /**
@@ -104,7 +74,7 @@ class Translator_Api_Translation extends Translator_AbstractApi
     {
         $this->validator->hasValues($args, ['mod_id']);
 
-        DBUtil::executeSQL("update translator_modtrans set in_use = 0 where mod_id = ".$args['mod_id']." ");
+        DBUtil::executeSQL("update translator_moduletranslations set in_use = 0 where module_id = {$args['mod_id']} ");
         DBUtil::deleteWhere('translator_translations_occurrences', "transmod_id = {$args['mod_id']}");
     }
 
@@ -127,14 +97,14 @@ class Translator_Api_Translation extends Translator_AbstractApi
 
         // Check if the Strings are allready in the database
         foreach ($this->translatorStrings as $key => $val) {
-            $existing = $this->checkIfTranslationExists($key, $val);
+            $existing = $this->checkIfTranslationExists($args['mod_id'], $key, $val);
 
             if ($existing !== false) {
                 unset($this->translatorStrings[$key]);
             }
         }
 
-        $this->addNewStrings2DB();
+        $this->addNewStrings2DB($args['mod_id']);
 
         $items = array();
 
@@ -148,6 +118,7 @@ class Translator_Api_Translation extends Translator_AbstractApi
     /**
      * Last steps in db after the scan
      *
+     * @deprecated
      * @param array $args
      */
     public function finalizeSearch(array $args)
@@ -171,6 +142,7 @@ class Translator_Api_Translation extends Translator_AbstractApi
     /**
      * Get or Count the available Translations
      *
+     * @deprecated
      * @param boolean $countonly Indicates whether to get or to count
      * @param string $searchfor Optional; String to search for
      * @param string $searchby Optional; Database field to search in
@@ -266,6 +238,7 @@ class Translator_Api_Translation extends Translator_AbstractApi
      * * string sort            optional    The sort field
      * * string sortdir         optional    The sort direction
      *
+     * @deprecated
      * @uses Translator_Api_Translation::getOrCountAll()
      * @param array $args All arguments passed to this function
      * @return array The list of available translations
@@ -295,6 +268,7 @@ class Translator_Api_Translation extends Translator_AbstractApi
      * * string searchby    optional    DB field to search in
      * * string mod         optional    The module id
      *
+     * @deprecated
      * @uses Translator_Api_Translation::getOrCountAll()
      * @param array $args All arguments passed to this function
      * @return int The list of available translations
@@ -413,11 +387,18 @@ class Translator_Api_Translation extends Translator_AbstractApi
      *
      * @return void
      */
-    protected function addNewStrings2DB()
+    protected function addNewStrings2DB($module_id)
     {
         foreach ($this->translatorStrings as $string => $fileArray) {
-            $newObj = array('sourcestring' => str_replace("'", "####", str_replace("\\", "++++",$string)));
-            $newObj = DBUtil::insertObject($newObj, 'translator_translations', 'trans_id');
+            //$newObj = array('sourcestring' => str_replace("'", "####", str_replace("\\", "++++",$string)));
+            //$newObj = DBUtil::insertObject($newObj, 'translator_translations', 'trans_id');
+            $newObj = [
+                'module_id' => $module_id,
+                'sourcestring' => str_replace("'", "####", str_replace("\\", "++++", $string)),
+                'in_use' => 1,
+                'ignore_msgid' => 0,
+            ];
+            $newObj = DBUtil::insertObject($newObj, 'translator_moduletranslations', 'id');
 
             if ($newObj == false) {
                 continue;
@@ -425,7 +406,7 @@ class Translator_Api_Translation extends Translator_AbstractApi
 
             foreach ($fileArray as $sourceFile => $lineArray) {
                 foreach ($lineArray as $sourceLine => $moduleArray) {
-                    $where = ' trans_id='.$newObj['trans_id'].' and mod_id='.$moduleArray['mod_id'];
+                    /*$where = ' trans_id='.$newObj['trans_id'].' and mod_id='.$moduleArray['mod_id'];
                     $modtransObj = DBUtil::selectExpandedObject('translator_modtrans', array(), $where);
 
                     if (empty($modtransObj)) {
@@ -439,6 +420,20 @@ class Translator_Api_Translation extends Translator_AbstractApi
                     if (!empty($modtransObj)) {
                         DBUtil::executeSQL("insert into translator_translations_occurrences values ".
                             "(".$modtransObj['transmod_id'].", '$sourceFile', $sourceLine)");
+                    }*/
+
+                    // Check occurences
+                    $occurence_check = DBUtil::selectExpandedObject(
+                        'translator_translations_occurrences',
+                        [],
+                        "transmod_id = {$newObj['id']}
+                         and file = '{$sourceFile}'
+                         and line = {$sourceLine}"
+                    );
+
+                    if ($occurence_check !== false) {
+                        DBUtil::executeSQL("insert into translator_translations_occurrences values
+                            ({$newObj['id']}, '{$sourceFile}', {$sourceLine})");
                     }
                 }
             }
@@ -622,11 +617,13 @@ class Translator_Api_Translation extends Translator_AbstractApi
      * @param string $translationArray
      * @return boolean|array
      */
-    protected function checkIfTranslationExists($translationkey, $translationArray)
+    protected function checkIfTranslationExists($module_id, $translationkey, $translationArray)
     {
         $translationkey = str_replace("'", "####", str_replace("\\", "++++",$translationkey));
-        $where = "sourcestring= BINARY '".$translationkey."' ";
-        $translationObj = DBUtil::selectExpandedObject('translator_translations',array(),$where);
+        //$where = "sourcestring= BINARY '".$translationkey."' ";
+        //$translationObj = DBUtil::selectExpandedObject('translator_translations',array(),$where);
+        $where = "module_id = {$module_id} and sourcestring = BINARY '{$translationkey}' ";
+        $translationObj = DBUtil::selectExpandedObject('translator_moduletranslations', [], $where);
 
         if ($translationObj == false) {
             return false;
@@ -635,7 +632,7 @@ class Translator_Api_Translation extends Translator_AbstractApi
                 foreach ($transFileArray as $transFileLine => $msgArray) {
 
                     // Check module-reference
-                    $where = "trans_id=".$translationObj['trans_id']." and mod_id=".$msgArray['mod_id'];
+                    /*$where = "trans_id=".$translationObj['trans_id']." and mod_id=".$msgArray['mod_id'];
                     $modcheck = DBUtil::selectExpandedObject('translator_modtrans',array(),$where);
 
                     if ($modcheck != false) {
@@ -674,6 +671,24 @@ class Translator_Api_Translation extends Translator_AbstractApi
                         );
                         $insobj2 = DBUtil::insertObject($insobj2, 'translator_translations_occurrences', 'transocc_id');
                         unset($translationArray[$transFile][$transFileLine]);
+                    }*/
+
+                    DBUtil::executeSQL("update translator_moduletranslations set in_use = 1 where id = {$translationObj['id']}");
+
+                    // Check occurences
+                    $occurence_check = DBUtil::selectExpandedObject(
+                        'translator_translations_occurrences',
+                        [],
+                        "transmod_id = {$translationObj['id']}
+                         and file = '{$msgArray['file']}'
+                         and line = {$msgArray['line']}"
+                     );
+
+                    if ($occurence_check !== false) {
+                        unset($translationArray[$transFile][$transFileLine]);
+                    } else {
+                        DBUtil::executeSQL("insert into translator_translations_occurrences values
+                            ({$translationObj['id']}, '{$msgArray['file']}', {$msgArray['line']})");
                     }
 
                     if (count($translationArray[$transFile]) == 0) {

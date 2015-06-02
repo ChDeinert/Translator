@@ -55,7 +55,7 @@
           <tr class="{cycle values='z-odd,z-even'}">
             <td>{$translation.sourcestring|htmlentities}</td>
             <td class="z-center">
-              <input type="text" name="translations[{$translation.trans_id}]" id="translation_{$translation.trans_id}" value="{$translation.targetstring}" style="width:90%"/>
+              <input type="text" name="translations[{$translation.id}]" id="translation_{$translation.id}" value="{$translation.targetstring}" style="width:90%"/>
             </td>
           </tr>
         {foreachelse}
