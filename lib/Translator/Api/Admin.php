@@ -53,10 +53,10 @@ class Translator_Api_Admin extends Translator_AbstractApi
         $links = array();
 
         $links[] = array(
-            'url'   => ModUtil::url('Translator', 'admin', 'view'),
+            'url'   => ModUtil::url('Translator', 'user', 'main'),
             'text'  => $this->__('Available Translations'),
             'class' => 'z-icon-es-view',
-            'links' => $this->getSecondaryLinks(),
+            //'links' => $this->getSecondaryLinks(),
         );
         $links[] = array(
             'url'   => ModUtil::url('Translator', 'admin', 'configLanguages'),
@@ -77,6 +77,7 @@ class Translator_Api_Admin extends Translator_AbstractApi
      *
      * Returns an Array with available secondary/dropdown admin panel links
      *
+     * @deprecated
      * @return array
      */
     public function getSecondaryLinks()
