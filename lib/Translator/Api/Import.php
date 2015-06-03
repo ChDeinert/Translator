@@ -360,18 +360,18 @@ class Translator_Api_Import extends Translator_AbstractApi
 
         if (file_exists("{$modulepath}/locale/module_{$modname}.pot")) {
             $files[] = [
-                'file' => "{$modulepath}/locale/module_{$modname}.pot",
+                'file'     => "{$modulepath}/locale/module_{$modname}.pot",
                 'language' => null,
-                'type' => 'pot',
+                'type'     => 'pot',
             ];
         }
 
         foreach ($this->getVar('translationLanguages') as $language) {
             if (file_exists("{$modulepath}/locale/{$language}/LC_MESSAGES/module_{$modname}.po")) {
                 $files[] = [
-                    'file' => "{$modulepath}/locale/{$language}/LC_MESSAGES/module_{$modname}.po",
+                    'file'     => "{$modulepath}/locale/{$language}/LC_MESSAGES/module_{$modname}.po",
                     'language' => $language,
-                    'type' => 'po',
+                    'type'     => 'po',
                 ];
             }
         }
@@ -482,7 +482,7 @@ class Translator_Api_Import extends Translator_AbstractApi
 
             if ($transObj == false) {
                 $newTransObj = [
-                    'module_id' => $mod_id,
+                    'module_id'    => $mod_id,
                     'sourcestring' => str_replace("'", "####", str_replace("\\", "++++", $translation['msgid'])),
                 ];
                 $newTransObj = DBUtil::insertObject($newTransObj, 'translator_moduletranslations', 'id');
@@ -513,8 +513,8 @@ class Translator_Api_Import extends Translator_AbstractApi
 
                 if ($langObj == false) {
                     $newLangObj = [
-                        'trans_id' => $translationId,
-                        'language' => $language,
+                        'trans_id'     => $translationId,
+                        'language'     => $language,
                         'targetstring' => str_replace("'", "####", str_replace("\\", "++++", $translation['msgstr'])),
                     ];
                     DBUtil::insertObject($newLangObj, 'translator_translations_lang', 'lang_id');

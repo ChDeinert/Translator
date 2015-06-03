@@ -36,32 +36,6 @@ function Translator_tables()
         'ignore_msgid' => "I(1) DEFAULT 0",
     ];
 
-    // Table containing Module-Translation connections
-    $dbtable['translator_modtrans'] = 'translator_modtrans';
-    $dbtable['translator_modtrans_column'] = [
-        'transmod_id'  => 'transmod_id',
-        'trans_id'     => 'trans_id',
-        'mod_id'       => 'mod_id',
-        'in_use'       => 'in_use',
-    ];
-    $dbtable['translator_modtrans_column_def'] = [
-        'transmod_id'  => 'I UNSIGNED AUTO PRIMARY',
-        'trans_id'     => 'I UNSIGNED NOTNULL DEFAULT 0',
-        'mod_id'       => 'I UNSIGNED NOTNULL DEFAULT 0',
-        'in_use'       => 'I(1) DEFAULT 1',
-    ];
-
-    // Table containing the Gettext MsgIDs
-    $dbtable['translator_translations'] = 'translator_translations';
-    $dbtable['translator_translations_column'] = [
-        'trans_id'     => 'trans_id',
-        'sourcestring' => 'sourcestring',
-    ];
-    $dbtable['translator_translations_column_def'] = [
-        'trans_id'     => 'I UNSIGNED AUTO PRIMARY',
-        'sourcestring' => 'X',
-    ];
-
     // Table containing the Gettext MsgStrs for each configured language
     $dbtable['translator_translations_lang'] = 'translator_translations_lang';
     $dbtable['translator_translations_lang_column'] = [

@@ -24,17 +24,17 @@ class Translator_Api_Admin extends Translator_AbstractApi
     public function getModules()
     {
         $configuredModules = $this->getVar('translatorModules');
-        $modules = array();
+        $modules = [];
 
         if (!is_array($configuredModules)) {
-            $modules = array();
+            $modules = [];
         } else {
             foreach ($configuredModules as $key => $val) {
                 $moduleInfo = ModUtil::getInfo($val);
-                $modules[] = array(
+                $modules[] = [
                     'mod_id'  => $val,
                     'modname' => $moduleInfo['displayname'],
-                );
+                ];
             }
         }
 
@@ -50,24 +50,23 @@ class Translator_Api_Admin extends Translator_AbstractApi
      */
     public function getlinks()
     {
-        $links = array();
-
-        $links[] = array(
+        $links = [];
+        $links[] = [
             'url'   => ModUtil::url('Translator', 'user', 'main'),
             'text'  => $this->__('Available Translations'),
             'class' => 'z-icon-es-view',
             //'links' => $this->getSecondaryLinks(),
-        );
-        $links[] = array(
+        ];
+        $links[] = [
             'url'   => ModUtil::url('Translator', 'admin', 'configLanguages'),
             'text'  => $this->__('Configure translation languages'),
             'class' => 'z-icon-es-locale',
-        );
-        $links[] = array(
+        ];
+        /*$links[] = array(
             'url'   => ModUtil::url('Translator', 'admin', 'configModules'),
             'text'  => $this->__('Configure translation modules'),
             'class' => 'z-icon-es-config',
-        );
+        );*/
 
         return $links;
     }

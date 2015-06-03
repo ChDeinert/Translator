@@ -73,7 +73,7 @@ class Translator_Controller_User extends Translator_AbstractController
         $translations      = ModUtil::apiFunc($this->name, 'Translation', 'all', $data);
         $translation_count = ModUtil::apiFunc($this->name, 'Translation', 'count', $data);
         $languages         = ModUtil::apiFunc($this->name, 'Translation', 'avaiableLanguages', $data);
-        $importable_files = ModUtil::apiFunc($this->name, 'Import', 'getFiles', $data);
+        $importable_files  = ModUtil::apiFunc($this->name, 'Import', 'getFiles', $data);
 
         $this->assign2View($data);
         return $this->view
@@ -108,7 +108,10 @@ class Translator_Controller_User extends Translator_AbstractController
             ]);
         }
 
-        $this->redirect(ModUtil::url($this->name, 'User', 'editTranslations', ['mod_id' => $data['mod_id'], 'translation_language' => $data['translation_language']]));
+        $this->redirect(ModUtil::url($this->name, 'User', 'editTranslations', [
+            'mod_id'               => $data['mod_id'],
+            'translation_language' => $data['translation_language']
+        ]));
     }
 
     /**
@@ -136,8 +139,8 @@ class Translator_Controller_User extends Translator_AbstractController
     public function importTranslation()
     {
         $data = [
-            'mod_id' => null,
-            'file' => null,
+            'mod_id'   => null,
+            'file'     => null,
             'filetype' => null,
             'language' => null,
         ];

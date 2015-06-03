@@ -32,7 +32,7 @@ class Translator_Controller_Ajax extends Zikula_Controller_AbstractAjax
         if ($mod == null) {
             $result = false;
         } else {
-            $result = ModUtil::apiFunc($this->name, 'Translation', 'addStrings2Translate', array('mod' => $mod));
+            $result = ModUtil::apiFunc($this->name, 'Translation', 'addStrings2Translate', ['mod' => $mod]);
         }
 
         return new Zikula_Response_Ajax(array('result' => $result));
@@ -68,6 +68,7 @@ class Translator_Controller_Ajax extends Zikula_Controller_AbstractAjax
     /**
      * Ending of the Filescan Process
      *
+     * @deprecated
      * @return Zikula_Response_Ajax
      */
     public function endScan()

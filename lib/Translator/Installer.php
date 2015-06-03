@@ -35,14 +35,6 @@ class Translator_Installer extends Zikula_AbstractInstaller
         if (!DBUtil::createTable('translator_moduletranslations')) {
             return false;
         }
-        /*
-        if (!DBUtil::createTable('translator_modtrans')) {
-            return false;
-        }
-        if (!DBUtil::createTable('translator_translations')) {
-            return false;
-        }
-        */
         if (!DBUtil::createTable('translator_translations_lang')) {
             return false;
         }
@@ -88,14 +80,6 @@ class Translator_Installer extends Zikula_AbstractInstaller
         if (!DBUtil::dropTable('translator_moduletranslations')) {
             return false;
         }
-        /*
-        if (!DBUtil::dropTable('translator_modtrans')) {
-            return false;
-        }
-        if (!DBUtil::dropTable('translator_translations')) {
-            return false;
-        }
-        */
         if (!DBUtil::dropTable('translator_translations_lang')) {
             return false;
         }

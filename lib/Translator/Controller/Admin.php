@@ -22,7 +22,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      */
     public function main()
     {
-        $this->redirect(ModUtil::url($this->name, 'admin', 'importTranslations'));
+        $this->redirect(ModUtil::url($this->name, 'admin', 'configLanguages'));
     }
 
     /**
@@ -53,6 +53,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      * * string mod                  The passed in Parameter
      * * array  awl_modules          Array with all configured Modules for the Translator module
      *
+     * @deprecated
      * @return string The rendered template output
      */
     public function view()
@@ -117,6 +118,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      * * string mod                  The passed in Parameter
      * * array  awl_modules          Array with all configured Modules for the Translator module
      *
+     * @deprecated
      * @return string The rendered template output
      */
     public function edit()
@@ -173,6 +175,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      * * array  upd_targetstring_{language}  Holds the informations which translationstrings are to update. defined by {language}
      * * string targetstring_{id}_{language} Holds the translation. defined by {id} and {language}
      *
+     * @deprecated
      * @return void
      */
     public function store()
@@ -233,6 +236,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      * * array translationLanguages The available languages
      * * array links Admin menu links
      *
+     * @deprecated
      * @return string The rendered template output
      */
     public function exportTranslations()
@@ -274,6 +278,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      * ---------------------------------
      * * int mod_id The ID of the module to export
      *
+     * @deprecated
      * @throws Zikula_Exception_Forbidden Thrown if the parameter 'mod_id' is null
      * @return void
      */
@@ -303,6 +308,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      * * int    mod_id                  The ID of the module to export
      * * string language    optional;   The language to export
      *
+     * @deprecated
      * @throws Zikula_Exception_Forbidden Thrown if the parameter 'mod_id' is null
      * @return void
      */
@@ -343,6 +349,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      * ---------------------------------
      * * array items JSON encoded array containing the modules to search in
      *
+     * @deprecated
      * @return string The rendered template output
      */
     public function addNewTranslations()
@@ -367,6 +374,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      * * array importmodules    The available modules
      * * array links            Admin menu links
      *
+     * @deprecated
      * @return string The rendered template output
      */
     public function importTranslations()
@@ -430,6 +438,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      * * string type The                filetype
      * * string language    optional;   The language to import
      *
+     * @deprecated
      * @throws Zikula_Exception_Fatal Thrown if the parameters 'mod_id', 'file', 'type' are null
      * @return void
      */
@@ -467,6 +476,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      * -----------------------------------
      * * array availableModules All available modules
      *
+     * @deprecated
      * @return string The rendered template output
      */
     public function configModules()
@@ -507,6 +517,7 @@ class Translator_Controller_Admin extends Translator_AbstractController
      * ---------------------------------
      * * array modules The modules to translate
      *
+     * @deprecated
      * @return void
      */
     public function storeConfigModules()

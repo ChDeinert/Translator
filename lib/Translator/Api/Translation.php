@@ -334,6 +334,7 @@ class Translator_Api_Translation extends Translator_AbstractApi
     /**
      * Searches and adds new msgids
      *
+     * @deprecated
      * @uses Translator_Api_Translation::processDirectory()
      * @uses Translator_Api_Translation::checkIfTranslationExists()
      * @uses Translator_Api_Translation::addNewStrings2DB()

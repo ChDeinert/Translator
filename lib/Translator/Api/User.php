@@ -29,16 +29,6 @@ class Translator_Api_User extends Translator_AbstractApi
     }
 
     /**
-     * Returns only the 2-digit languagecodes known to Zikula
-     *
-     * @return array
-     */
-    public function getLanguages()
-    {
-        return [];
-    }
-
-    /**
      * Post initialise: called from constructor
      *
      * @see Zikula_AbstractBase::postInitialize()
