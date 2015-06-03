@@ -73,6 +73,7 @@ class Translator_Controller_User extends Translator_AbstractController
         $translations      = ModUtil::apiFunc($this->name, 'Translation', 'all', $data);
         $translation_count = ModUtil::apiFunc($this->name, 'Translation', 'count', $data);
         $languages         = ModUtil::apiFunc($this->name, 'Translation', 'avaiableLanguages', $data);
+        $importable_files = ModUtil::apiFunc($this->name, 'Import', 'getFiles', $data);
 
         $this->assign2View($data);
         return $this->view
@@ -80,6 +81,7 @@ class Translator_Controller_User extends Translator_AbstractController
             ->assign('translations', $translations)
             ->assign('translation_count', $translation_count)
             ->assign('languages', $languages)
+            ->assign('importable_files', $importable_files)
             ->fetch('user/editTranslations.tpl');
     }
 
@@ -129,6 +131,26 @@ class Translator_Controller_User extends Translator_AbstractController
         }
 
         $this->redirect(ModUtil::url($this->name, 'User', 'editTranslations', $data));
+    }
+
+    public function importTranslation()
+    {
+        $data = [
+            'mod_id' => null,
+            'file' => null,
+            'filetype' => null,
+            'language' => null,
+        ];
+        $this->getGet($data);
+        $this->validator->checkNotNull($data, ['mod_id', 'file', 'filetype']);
+
+        if ($data['filetype'] == 'pot') {
+            ModUtil::apiFunc($this->name, 'Import', 'importFromPot', $data);
+        } else {
+            ModUtil::apiFunc($this->name, 'Import', 'importFromPo', $data);
+        }
+
+        $this->redirect(ModUtil::url($this->name, 'User', 'editTranslations', ['mod_id' => $data['mod_id']]));
     }
 
     /**

@@ -22,6 +22,9 @@
     <li><a href="{modurl modname=$modinfo.name type='User' func='searchTranslations' mod_id=$mod_id}" class="z-icon-es-search">{gt text='Scan for untranslated Strings'}</a></li>
     <li><a href="{modurl modname=$modinfo.name type='User' func='exportTranslation' mod_id=$mod_id target='po'}" class="z-icon-es-export">{gt text='Export Translations'}</a></li>
     <li><a href="{modurl modname=$modinfo.name type='User' func='exportTranslation' mod_id=$mod_id target='pot'}" class="z-icon-es-export">{gt text='Export Translation Template'}</a></li>
+    {foreach from=$importable_files item='file'}
+        <li><a href="{modurl modname=$modinfo.name type='User' func='importTranslation' mod_id=$mod_id file=$file.file language=$file.language filetype=$file.type}" class="z-icon-es-import">{gt text='Import from %s file' tag1=$file.type}{if ($file.type != 'pot')}({gt text='Language: %s' tag1=$file.language}){/if}</a></li>
+    {/foreach}
   </ul>
 </div>
 

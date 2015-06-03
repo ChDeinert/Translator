@@ -349,6 +349,36 @@ class Translator_Api_Import extends Translator_AbstractApi
         }
     }
 
+    public function getFiles(array $args)
+    {
+        $this->validator->hasValues($args, ['mod_id']);
+
+        $files = [];
+        $modInfo = ModUtil::apiFunc('Extensions', 'admin', 'modify', ['id' => $args['mod_id']]);
+        $modulepath = 'modules/'.$modInfo['directory'];
+        $modname = mb_strtolower($modInfo['name']);
+
+        if (file_exists("{$modulepath}/locale/module_{$modname}.pot")) {
+            $files[] = [
+                'file' => "{$modulepath}/locale/module_{$modname}.pot",
+                'language' => null,
+                'type' => 'pot',
+            ];
+        }
+
+        foreach ($this->getVar('translationLanguages') as $language) {
+            if (file_exists("{$modulepath}/locale/{$language}/LC_MESSAGES/module_{$modname}.po")) {
+                $files[] = [
+                    'file' => "{$modulepath}/locale/{$language}/LC_MESSAGES/module_{$modname}.po",
+                    'language' => $language,
+                    'type' => 'po',
+                ];
+            }
+        }
+
+        return $files;
+    }
+
     /**
      * Post initialise: called from constructor
      *
@@ -368,7 +398,8 @@ class Translator_Api_Import extends Translator_AbstractApi
             return false;
         }
 
-        $filehandler = fopen($args['file'], 'r');
+        $filehandler = fopen($file, 'r');
+        $translations = [];
         $occurrences = [];
         $occurrence = null;
         $msgid = null;
@@ -405,18 +436,16 @@ class Translator_Api_Import extends Translator_AbstractApi
                 }
             }
             if (substr($line, 0, 5) == 'msgid') {
-                $msgid = substr(trim(substr($line, 7, -1)));
+                $msgid = substr(trim($line), 7, -1);
                 $id = true;
-            }
-            if ($id && substr($line, 0, 6) != 'msgstr') {
+            } elseif ($id && substr($line, 0, 6) != 'msgstr') {
                 $msgid .= substr(trim($line), 1, -1);
             }
             if (substr($line, 0, 6) == 'msgstr') {
                 $id = false;
                 $msgstr = substr(trim($line), 8, -1);
                 $str = true;
-            }
-            if ($str && trim($line) !== '') {
+            } elseif ($str && trim($line) !== '') {
                 $msgstr .= substr(trim($line), 1, -1);
             }
 
@@ -488,6 +517,7 @@ class Translator_Api_Import extends Translator_AbstractApi
                         'language' => $language,
                         'targetstring' => str_replace("'", "####", str_replace("\\", "++++", $translation['msgstr'])),
                     ];
+                    DBUtil::insertObject($newLangObj, 'translator_translations_lang', 'lang_id');
                 }
             }
         }
