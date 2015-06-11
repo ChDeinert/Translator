@@ -14,34 +14,6 @@
 class Translator_Api_Admin extends Translator_AbstractApi
 {
     /**
-     * Gets Modules activated for translation
-     *
-     * Returns the Module-ID and Module-Displayname
-     * for the modules activated for Usage with the Translator Module
-     *
-     * @return array
-     */
-    public function getModules()
-    {
-        $configuredModules = $this->getVar('translatorModules');
-        $modules = [];
-
-        if (!is_array($configuredModules)) {
-            $modules = [];
-        } else {
-            foreach ($configuredModules as $key => $val) {
-                $moduleInfo = ModUtil::getInfo($val);
-                $modules[] = [
-                    'mod_id'  => $val,
-                    'modname' => $moduleInfo['displayname'],
-                ];
-            }
-        }
-
-        return $modules;
-    }
-
-    /**
      * Gets available admin panel links.
      *
      * Returns an Array with available admin panel links
@@ -55,59 +27,12 @@ class Translator_Api_Admin extends Translator_AbstractApi
             'url'   => ModUtil::url('Translator', 'user', 'main'),
             'text'  => $this->__('Available Translations'),
             'class' => 'z-icon-es-view',
-            //'links' => $this->getSecondaryLinks(),
         ];
         $links[] = [
             'url'   => ModUtil::url('Translator', 'admin', 'configLanguages'),
             'text'  => $this->__('Configure translation languages'),
             'class' => 'z-icon-es-locale',
         ];
-        /*$links[] = array(
-            'url'   => ModUtil::url('Translator', 'admin', 'configModules'),
-            'text'  => $this->__('Configure translation modules'),
-            'class' => 'z-icon-es-config',
-        );*/
-
-        return $links;
-    }
-
-    /**
-     * Gets available secondary/dropdown admin panel links
-     *
-     * Returns an Array with available secondary/dropdown admin panel links
-     *
-     * @deprecated
-     * @return array
-     */
-    public function getSecondaryLinks()
-    {
-        $links = array();
-
-        $links[] = array(
-            'url'   => ModUtil::url('Translator', 'admin', 'view'),
-            'text'  => $this->__('View Available Translations'),
-            'class' => 'z-icon-es-view',
-        );
-        $links[] = array(
-            'url'   => ModUtil::url('Translator', 'admin', 'edit'),
-            'text'  => $this->__('Edit Available Translations'),
-            'class' => 'z-icon-es-edit',
-        );
-        $links[] = array(
-            'url'   => ModUtil::url('Translator', 'admin', 'exportTranslations'),
-            'text'  => $this->__('Export Translations'),
-            'class' => 'z-icon-es-export',
-        );
-        $links[] = array(
-            'url'   => ModUtil::url('Translator', 'admin', 'addNewTranslations'),
-            'text'  => $this->__('Add New Translation Strings'),
-            'class' => 'z-icon-es-search',
-        );
-        $links[] = array(
-            'url'   => ModUtil::url('Translator', 'admin', 'importTranslations'),
-            'text'  => $this->__('Import Translation from Module'),
-            'class' => 'z-icon-es-import',
-        );
 
         return $links;
     }

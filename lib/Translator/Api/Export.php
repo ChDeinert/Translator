@@ -8,6 +8,8 @@
  * @subpackage Api
  */
 
+use Translator_Helper_Translation as Helper;
+
 /**
  * This Class provides the API for the Export
  */
@@ -38,43 +40,6 @@ class Translator_Api_Export extends Translator_AbstractApi
     {
         $this->validator->hasValues($args, ['mod_id']);
         $this->export($args['mod_id']);
-    }
-
-    /**
-     * Export the Translationstrings into an .pot file.
-     *
-     * Parameters passed in the $args array:
-     * -------------------------------------
-     * * int mod_id The id of the Module to create the .pot file for
-     *
-     * @deprecated
-     *
-     * @param array $args All arguments passed to this function
-     * @throws Zikula_Exception_Fatal Thrown if the parameter 'mod_id' is not set or empty
-     * @return void
-     */
-    public function export2Pot($args)
-    {
-        $this->toPot($args);
-    }
-
-    /**
-     * Export the Translations into an .po file.
-     *
-     * Parameters passed in the $args array:
-     * -------------------------------------
-     * * int    mod_id      The id of the Module to create the .po file for
-     * * string language    The language to export
-     *
-     * @deprecated
-     *
-     * @param array $args All arguments passed to this function
-     * @throws Zikula_Exception_Fatal Thrown if the parameters 'mod_id', 'language' are not set or empty
-     * @return void
-     */
-    public function export2Po($args)
-    {
-        $this->toPo($args);
     }
 
     /**
@@ -123,18 +88,14 @@ class Translator_Api_Export extends Translator_AbstractApi
     protected function export($mod_id, $language = null)
     {
         $filecontent = $this->writeHeader($language);
-        /*$modtransArray = DBUtil::selectExpandedObjectArray(
-            'translator_modtrans',
+        $modtransArray = DBUtil::selectExpandedObjectArray(
+            'translator_moduletranslations',
             [],
-            ' mod_id='.$mod_id.' and in_use=1',
-            'trans_id'
-        );*/
-        $modtransArray = DBUtil::selectExpandedObjectArray('translator_moduletranslations', [], "module_id = {$mod_id} and in_use = 1 and ignore_msgid = 0", 'id');
+            "module_id = {$mod_id} and in_use = 1 and ignore_msgid = 0",
+            'id'
+        );
 
         foreach ($modtransArray as $modtrans) {
-            /*$filecontent .= $this->writeOccurrences($modtrans['transmod_id']);
-            $filecontent .= $this->writeMsgID($modtrans['trans_id']);
-            $filecontent .= $this->writeMsgStr($modtrans['trans_id'], $language);*/
             $filecontent .= $this->writeOccurrences($modtrans['id']);
             $filecontent .= $this->writeMsgID($modtrans['id']);
             $filecontent .= $this->writeMsgStr($modtrans['id'], $language);
@@ -220,10 +181,9 @@ class Translator_Api_Export extends Translator_AbstractApi
      */
     private function writeMsgID($trans_id)
     {
-        //$sourcetrans = DBUtil::selectExpandedObjectByID('translator_translations', [], $trans_id, 'trans_id');
         $sourcetrans = DBUtil::selectExpandedObjectByID('translator_moduletranslations', [], $trans_id, 'id');
         $msgid_string = 'msgid "'.
-            str_replace("####", "'", str_replace("++++", "\\", $sourcetrans['sourcestring'])).
+            Helper::prepForDisplay($sourcetrans['sourcestring']).
             '"'."\r\n";
 
         return $msgid_string;
@@ -250,11 +210,10 @@ class Translator_Api_Export extends Translator_AbstractApi
             );
 
             if ($targettrans == false || empty($targettrans) || $targettrans['targetstring'] == '') {
-                //$sourcetrans = DBUtil::selectExpandedObjectByID('translator_translations', [], $trans_id, 'trans_id');
                 $sourcetrans = DBUtil::selectExpandedObjectByID('translator_moduletranslations', [], $trans_id, 'id');
-                $msgstr_string .= str_replace("####", "'", str_replace("++++", "\\", $sourcetrans['sourcestring'])).'"';
+                $msgstr_string .= Helper::prepForDisplay($sourcetrans['sourcestring']).'"';
             } else {
-                $msgstr_string .= str_replace("####", "'", str_replace("++++", "\\", $targettrans['targetstring'])).'"';
+                $msgstr_string .= Helper::prepForDisplay($targettrans['targetstring']).'"';
             }
         }
 

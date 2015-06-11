@@ -97,7 +97,6 @@ class Translator_Controller_User extends Translator_AbstractController
             'translations'         => [],
         ];
         $this->getPost($data);
-        echo print_r($data, true);
         $this->validator->checkNotNull($data, ['mod_id', 'translation_language']);
 
         foreach ($data['translations'] as $key => $val) {
@@ -136,6 +135,10 @@ class Translator_Controller_User extends Translator_AbstractController
         $this->redirect(ModUtil::url($this->name, 'User', 'editTranslations', $data));
     }
 
+    /**
+     * Imports the Translations from a Po- or Pot-File.
+     * Redirects back to *User Controller editTranslations*
+     */
     public function importTranslation()
     {
         $data = [
@@ -167,7 +170,7 @@ class Translator_Controller_User extends Translator_AbstractController
         $this->validator = new Translator_Validator_Controller();
 
         if (!SecurityUtil::checkPermission('Translator::', '::', ACCESS_EDIT)) {
-            return LogUtil::registerPermissionError();
+            throw new Zikula_Exception_Forbidden();
         }
     }
 }
