@@ -217,7 +217,7 @@ class Translator_Api_Export extends Translator_AbstractApi
             }
         }
 
-        $msgstr_string .= "\"\r\n\r\n";
+        $msgstr_string .= "\r\n\r\n";
 
         return $msgstr_string;
     }
