@@ -5,3 +5,6 @@ Formating infos: [Keep a CHANGELOG](http://keepachangelog.com/)
 ## [1.1.0] - [Unreleased]
 ### Added
 - Translation outside the Administration area
+
+### Removed
+- Translation inside the Administration area
