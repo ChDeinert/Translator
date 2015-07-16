@@ -28,7 +28,7 @@ class Translator_Controller_User extends Translator_AbstractController
      */
     public function viewModules()
     {
-        $available_modules = ModUtil::apiFunc('Extensions', 'Admin', 'listmodules');
+        $available_modules = ModUtil::apiFunc($this->name, 'Extension', 'all');
 
         return $this->view
             ->assign('available_modules', $available_modules)
