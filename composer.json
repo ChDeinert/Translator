@@ -11,7 +11,7 @@
         }
     ],
     "autoload": {
-        "psr-4": { "ChDeinert\\Translator\\": "" }
+        "psr-4": { "ChDeinert\\Translator\\": "src/" }
     },
     "require": {
         "php": ">=5.6"
