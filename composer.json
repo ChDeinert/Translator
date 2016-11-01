@@ -1,0 +1,36 @@
+{
+    "name": "Translator",
+    "version": "2.0.0",
+    "description": "A Zikula Application Framework Module Providing a Web-based way to translate Zikula-modules.",
+    "type": "zikula-module",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Christian Deinert",
+            "homepage": "http://chdeinert.github.io"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "ChDeinert\\Translator\\": "" }
+    },
+    "require": {
+        "php": ">=5.6"
+    },
+    "extra": {
+        "zikula": {
+            "class": "ChDeinert\\Translator\\Translator",
+            "displayname": "Translator",
+            "url": "translator",
+            "core-compatibility": ">=1.4.3",
+            "capabilities": {
+                "user": {"route": "translator_translations_index"}
+            },
+            "securityschema": {
+                "Translator::": "::"
+            }
+        }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^1.12"
+    }
+}
