@@ -1,5 +1,7 @@
 # Translator
 
+![No Maintenance Intended](http://unmaintained.tech/badge.svg)
+
 A *[Zikula Application Framework](http://www.zikula.org)* Module Providing a Web-based way to translate Zikula-modules.
 
 
